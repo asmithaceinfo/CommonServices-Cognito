@@ -218,7 +218,7 @@ node('master') {
                 } 
             } 
             
-            stage ('API LifeCycle Mgmt (APIGEE)') {
+            stage ('API LifeCycle Mgmt (APIGEE)(Test)') {
             	def httpStatus = 1;
             	withCredentials([
             		[$class: 'StringBinding', credentialsId: apigeeAuthCredentials, variable: 'APIGEECREDS']]) {        		
@@ -233,9 +233,9 @@ node('master') {
         					cd templates/apigee/test/apiproxy/targets
         					find . -type f -name '*.xml' -print0 | xargs -0 sed -i 's/SED_REPLACE_OPENSHIFT_URL/${openshiftURL}/g'
         					cd ../../
-        					zip -r ${projectTagName}-${testProjectName} apiproxy/
-        					curl --silent -v -X POST -u ${APIGEECREDS} -F ""file=@${projectTagName}-${testProjectName}.zip"" "https://api.enterprise.apigee.com/v1/organizations/rduriseti-eval/apis?action=import&name=${projectTagName}-${testProjectName}"
-        					curl --silent -v -X POST -u ${APIGEECREDS} --header "Content-Type: application/x-www-form-urlencoded" "https://api.enterprise.apigee.com/v1/organizations/rduriseti-eval/environments/test/apis/${projectTagName}-${testProjectName}/revisions/1/deployments?override=true"
+        					zip -r ${projectTagName} apiproxy/
+        					curl --silent -v -X POST -u ${APIGEECREDS} -F ""file=@${projectTagName}.zip"" "https://api.enterprise.apigee.com/v1/organizations/rduriseti-eval/apis?action=import&name=${projectTagName}"
+        					curl --silent -v -X POST -u ${APIGEECREDS} --header "Content-Type: application/x-www-form-urlencoded" "https://api.enterprise.apigee.com/v1/organizations/rduriseti-eval/environments/test/apis/${projectTagName}/revisions/1/deployments?override=true"
         				"""
 					}
             	}
@@ -252,39 +252,6 @@ node('master') {
 	            }
             }                              
 
-            stage ('Rolling Deployment (Stage Env)') {
-                withCredentials([
-                    [$class: 'UsernamePasswordMultiBinding', credentialsId: osCredentialId, usernameVariable: 'OS_USERNAME', passwordVariable: 'OS_PASSWORD'],
-                    [$class: 'UsernamePasswordMultiBinding', credentialsId: nexusCredentialId, usernameVariable: 'NEXUS_USERNAME', passwordVariable: 'NEXUS_PASSWORD'],
-                    string(credentialsId: stageConfigMapKeyValues, variable: 'STAGE_CONFIG')
-                    ]) {
-                        sh """
-                            ${oc} login ${osHost} --username=${env.OS_USERNAME} --password=${env.OS_PASSWORD} --insecure-skip-tls-verify
-                        """
-                        try {
-                            sh """
-                                ${oc} project ${stageProjectName}
-                            """         
-                        } catch (Exception e) {
-                            sh """
-                                ${oc} new-project ${stageProjectName} --display-name="${stageProjectDisplayName}"
-                                ${oc} secrets new-dockercfg "nexus-${stageProjectName}" --docker-server=${nexusRegistryURL}/${nexusRepoUser} --docker-username=${env.NEXUS_USERNAME} --docker-password=${env.NEXUS_PASSWORD} --docker-email=${nexusEmail}
-                                ${oc} secrets link default "nexus-${stageProjectName}" --for=pull
-                                ${oc} secrets link builder "nexus-${stageProjectName}" --for=pull
-                                ${oc} secrets link deployer "nexus-${stageProjectName}" --for=pull
-                                ${oc} create configmap ${osConfigMapName} $STAGE_CONFIG
-                            """                
-                        }
-                        sh """
-                            ${oc} process -f ${stageTemplateName} | ${oc} apply -f - -n ${stageProjectName}
-                            ${oc} tag --source=docker ${nexusRegistryURL}/${nexusRepoUser}/${projectTagName}:${dockerImageVersion} ${stageProjectName}/${projectTagName}-is:${dockerImageVersion} --insecure
-                            sleep 5
-                            ${oc} import-image ${projectTagName}-is:${dockerImageVersion} --confirm --insecure | grep -i "successfully"
-                            sleep 30
-                        """
-                    }
-            }
-            
          	stage ('Zero Downtime Deployment (ZDD)') {
                 withCredentials([
                     [$class: 'UsernamePasswordMultiBinding', credentialsId: osCredentialId, usernameVariable: 'OS_USERNAME', passwordVariable: 'OS_PASSWORD'],
@@ -430,11 +397,13 @@ node('master') {
             stage ('API LifeCycle Mgmt (APIGEE)') {
             	def httpStatus = 1;
             	withCredentials([
+                    [$class: 'UsernamePasswordMultiBinding', credentialsId: osCredentialId, usernameVariable: 'OS_USERNAME', passwordVariable: 'OS_PASSWORD'],
+                    [$class: 'UsernamePasswordMultiBinding', credentialsId: nexusCredentialId, usernameVariable: 'NEXUS_USERNAME', passwordVariable: 'NEXUS_PASSWORD'],
             		[$class: 'StringBinding', credentialsId: apigeeAuthCredentials, variable: 'APIGEECREDS']]) {        		
                  	dir("${env.WORKSPACE}${filepath}") {
                  		sh """
                             ${oc} login ${osHost} --username=${env.OS_USERNAME} --password=${env.OS_PASSWORD} --insecure-skip-tls-verify
-                            ${oc} project ${testProjectName}
+                            ${oc} project ${prodProjectName}
 	              			${oc} get route ${projectTagName} -n ${prodProjectName} -o jsonpath='{ .spec.host }' > ${projectTagName}-${prodProjectName}.txt
             	   		"""
                  	
@@ -444,9 +413,9 @@ node('master') {
         					cd templates/apigee/prod/apiproxy/targets
         					find . -type f -name '*.xml' -print0 | xargs -0 sed -i 's/SED_REPLACE_OPENSHIFT_URL/${openshiftURL}/g'
         					cd ../../
-        					zip -r ${projectTagName}-${testProjectName} apiproxy/
-        					curl --silent -v -X POST -u ${APIGEECREDS} -F ""file=@${projectTagName}-${prodProjectName}.zip"" "https://api.enterprise.apigee.com/v1/organizations/rduriseti-eval/apis?action=import&name=${projectTagName}-${prodProjectName}"
-        					curl --silent -v -X POST -u ${APIGEECREDS} --header "Content-Type: application/x-www-form-urlencoded" "https://api.enterprise.apigee.com/v1/organizations/rduriseti-eval/environments/prod/apis/${projectTagName}-${prodProjectName}/revisions/1/deployments?override=true"
+        					zip -r ${projectTagName} apiproxy/
+        					curl --silent -v -X POST -u ${APIGEECREDS} -F ""file=@${projectTagName}.zip"" "https://api.enterprise.apigee.com/v1/organizations/rduriseti-eval/apis?action=import&name=${projectTagName}"
+        					curl --silent -v -X POST -u ${APIGEECREDS} --header "Content-Type: application/x-www-form-urlencoded" "https://api.enterprise.apigee.com/v1/organizations/rduriseti-eval/environments/prod/apis/${projectTagName}/revisions/1/deployments?override=true"
         				"""
 					}
             	}
