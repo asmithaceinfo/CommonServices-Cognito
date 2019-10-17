@@ -1,0 +1,137 @@
+kind: Template
+apiVersion: v1
+labels:
+  template: bdso-cognito-testing-deployment
+  group: bdso-cognito-testing-deployment
+  application: bdso-cognito
+  environment: staging
+metadata:
+  name: bdso-cognito-staging-deployment
+message: BDSO Staging Deployment of Cognito API
+
+objects:
+#APPLICATION
+- kind: Service
+  apiVersion: v1
+  metadata:
+    name: "bdso-cognito-stg-svc"
+  spec:
+    ports:
+    - name: "bdso-cognito-stg-svc"
+      port: 9000
+      targetPort: 9000
+    selector:
+      name: "bdso-cognito-stg-dc"
+    sessionAffinity: None
+
+#Application Route
+- kind: Route
+  apiVersion: v1
+  metadata:
+    name: bdso-cognito
+  spec:
+    tls:
+      termination: edge
+      insecureEdgeTerminationPolicy: Redirect 
+    to:
+      kind: Service
+      name: "bdso-cognito-stg-svc"
+
+# Application ImageStream
+- kind: ImageStream
+  apiVersion: v1
+  metadata:
+    name: "bdso-cognito-is"
+  spec:
+    dockerImageRepository: "aceinfocoe"
+    importPolicy:
+      insecure: true
+    name: 1.0.0
+
+- kind: DeploymentConfig
+  apiVersion: v1
+  metadata:
+    name: "bdso-cognito-stg-dc"
+  spec:
+    replicas: 1
+    selector:
+      name: "bdso-cognito-stg-dc"
+    strategy:
+      type: Rolling
+    template:
+      metadata:
+        labels:
+          name: "bdso-cognito-stg-dc"
+      spec:
+        containers:
+        - name: bdso-cognito
+          image: "bdso-cognito-is"
+          env:
+          - name: AWS_ACCESS_KEY_ID
+            valueFrom:
+                configMapKeyRef:
+                  name: bdso-cognito-config-map 
+                  key: AWS_ACCESS_KEY_ID 
+          - name: AWS_DEFAULT_REGION
+            valueFrom:
+              configMapKeyRef:
+                name: bdso-cognito-config-map 
+                key: AWS_DEFAULT_REGION 
+          - name: AWS_SECRET_ACCESS_KEY
+            valueFrom:
+              configMapKeyRef:
+                name: bdso-cognito-config-map 
+                key: AWS_SECRET_ACCESS_KEY 
+          - name: CORS_FILTER
+            valueFrom:
+              configMapKeyRef:
+                name: bdso-cognito-config-map 
+                key: CORS_FILTER           
+          - name: COGNITO_CLIENT_ID
+            valueFrom:
+              configMapKeyRef:
+                name: bdso-cognito-config-map 
+                key: COGNITO_CLIENT_ID           
+          - name: COGNITO_POOL_ID
+            valueFrom:
+              configMapKeyRef:
+                name: bdso-cognito-config-map 
+                key: COGNITO_POOL_ID           
+          ports:
+          - containerPort: 9000
+          imagePullPolicy: Always
+          livenessProbe:
+            httpGet:
+              path: /healthcheck
+              port: 9000
+            initialDelaySeconds: 30
+            timeoutSeconds: 30
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 10
+          readinessProbe:
+            httpGet:
+              path: /healthcheck
+              port: 9000
+            initialDelaySeconds: 30
+            timeoutSeconds: 30
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 10
+          resources:
+            requests:
+              memory: 1024Mi
+              cpu: 1000m
+            limits:
+              memory: 2048Mi
+              cpu: 1000m
+    triggers:
+    - type: ConfigChange
+    - type: ImageChange
+      imageChangeParams:
+        automatic: true
+        containerNames:
+        - "bdso-cognito"
+        from:
+          kind: ImageStream
+          name: "bdso-cognito-is:1.0.0"

@@ -1,0 +1,145 @@
+buildscript {
+	ext {
+		springBootVersion = '2.1.4.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+		classpath("se.transmode.gradle:gradle-docker:1.2")
+		classpath("org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.6.1")
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+group = 'com.aceinfo.coe.commonservices'
+version = '1.0.0'
+
+bootJar {
+    manifest {
+    	from 'MANIFEST.MF'
+        attributes("Implementation-Title": "BDSO Cognito APIs",
+        		   "Implementation-Vendor": "Ace Info Solutions, Inc.",
+                   "Implementation-Version": version)
+    }
+}
+
+jar {
+    baseName = 'bdso-cognito'
+    version =  version
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-rest', version: '2.1.4.RELEASE'
+
+	compile group: 'com.amazonaws', name: 'aws-java-sdk-cognitoidp', version: '1.11.546'
+	compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.8.1'
+
+	compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
+	compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
+
+	compile group: 'com.google.code.gson', name: 'gson', version: '2.8.5'
+	compile group: 'org.json', name: 'json', version: '20180813'
+	compile group: 'com.jayway.jsonpath', name: 'json-path', version: '2.4.0'	
+	compile group: 'com.auth0', name: 'java-jwt', version: '3.8.0'
+	
+	annotationProcessor group: 'org.projectlombok', name: 'lombok', version: '1.18.8'
+	
+	compile group: 'org.jacoco', name: 'org.jacoco.core', version: '0.8.3'
+	
+	testCompile group: 'junit', name: 'junit', version: '4.12'
+
+	testCompile group: 'org.mockito', name: 'mockito-core', version: '2.28.2'
+	testCompile group: 'org.assertj', name: 'assertj-core', version: '3.12.2'
+	testCompile group: 'org.springframework', name: 'spring-test', version: '5.1.7.RELEASE'
+	testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '2.1.5.RELEASE'
+
+	compileOnly('org.projectlombok:lombok')
+	testCompile group: 'com.jayway.jsonpath', name: 'json-path-assert', version: '2.4.0'
+
+	testCompile("junit:junit")
+	testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '2.1.4.RELEASE'
+	testCompile group: 'org.assertj', name: 'assertj-core', version: '3.11.1'
+}
+
+apply plugin: 'docker'
+group = 'aceinfocoe'
+task buildDocker(type: Docker, dependsOn: build) {
+  push = false
+  applicationName = jar.baseName
+  dockerfile = file('src/main/docker/Dockerfile')
+  doFirst {
+    copy {
+      from jar
+      into stageDir
+    }
+  }
+}
+
+apply plugin: 'org.sonarqube'
+sonarqube {
+  properties {
+    property "sonar.projectName", "BDSO Tech Challange - Cognito API"
+    property "sonar.projectKey", "org.sonarqube:BDSOCognitoAPI"
+    property "sonar.projectVersion",jar.baseName
+
+  }
+}
+
+apply plugin: 'findbugs'
+findbugs {
+    reportsDir = file("$project.buildDir/findbugs")
+    effort = "max"
+    reportLevel = "high"
+    ignoreFailures = "false"
+}
+
+test {
+    reports {
+        junitXml.enabled = true
+        html.enabled = true
+    }               
+}
+
+apply plugin: 'jacoco'
+jacocoTestCoverageVerification {
+  violationRules {
+    rule {
+      element = 'CLASS'
+      includes = [
+          'com.aceinfo.commonservices.security.api.cognito.controller.*'
+      ]
+      limit {
+        counter = 'LINE'
+        value = 'COVEREDRATIO'
+        minimum = 0.0
+      }
+      excludes = [
+      	'com.aceinfo.commonservices.security.api.cognito.config.*',
+      	'com.aceinfo.commonservices.security.api.cognito.exception.*',
+      	'com.aceinfo.commonservices.security.api.cognito.helpers.*',
+        'com.aceinfo.commonservices.security.api.cognito.models.*',
+	  	'com.aceinfo.commonservices.security.api.cognito.services.*',
+	  	'com.aceinfo.commonservices.security.api.cognito.utilities.*'
+      ]
+    }
+  }
+}
+
+check.dependsOn jacocoTestCoverageVerification
+test.finalizedBy jacocoTestReport
+
+
+

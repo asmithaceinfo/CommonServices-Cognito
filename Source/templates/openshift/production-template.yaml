@@ -1,0 +1,316 @@
+kind: Template
+apiVersion: v1
+labels:
+  template: bdso-cognito-production-deployment
+  group: bdso-cognito-production-deployment
+  application: bdso-cognito
+  environment: production
+metadata:
+  annotations:
+    description: BDSO Cognito API Production A/B Deployments
+    tags: bdso-cognito-production-deployment
+  name: bdso-cognito-production-deployment
+message: BDSO Cognito API Production Deployment Template
+
+objects:
+#Application Route
+- apiVersion: v1
+  kind: Route
+  metadata:
+    name: "bdso-cognito"
+  spec:
+    tls:
+      termination: edge
+      insecureEdgeTerminationPolicy: Redirect  
+    to:
+      kind: Service
+      name: "a-bdso-cognito-opr-svc"
+      weight: "50"
+    alternateBackends:
+    - kind: Service
+      name: "b-bdso-cognito-opr-svc"
+      weight: "50"
+
+#Application A Deployment
+- kind: DeploymentConfig
+  apiVersion: v1
+  metadata:
+    name: "a-bdso-cognito-opr-dc"
+  spec:
+    replicas: 1
+    selector:
+      name: "a-bdso-cognito-opr-dc"
+    strategy:
+      type: Rolling
+    template:
+      metadata:
+        labels:
+          name: "a-bdso-cognito-opr-dc"
+      spec:
+        containers:
+        - name: "a-bdso-cognito"
+          image: "a-bdso-cognito-is"
+          env:
+          - name: AWS_ACCESS_KEY_ID
+            valueFrom:
+                configMapKeyRef:
+                  name: bdso-cognito-config-map 
+                  key: AWS_ACCESS_KEY_ID 
+          - name: AWS_DEFAULT_REGION
+            valueFrom:
+              configMapKeyRef:
+                name: bdso-cognito-config-map 
+                key: AWS_DEFAULT_REGION 
+          - name: AWS_SECRET_ACCESS_KEY
+            valueFrom:
+              configMapKeyRef:
+                name: bdso-cognito-config-map 
+                key: AWS_SECRET_ACCESS_KEY 
+          - name: CORS_FILTER
+            valueFrom:
+              configMapKeyRef:
+                name: bdso-cognito-config-map 
+                key: CORS_FILTER           
+          - name: COGNITO_CLIENT_ID
+            valueFrom:
+              configMapKeyRef:
+                name: bdso-cognito-config-map 
+                key: COGNITO_CLIENT_ID           
+          - name: COGNITO_POOL_ID
+            valueFrom:
+              configMapKeyRef:
+                name: bdso-cognito-config-map 
+                key: COGNITO_POOL_ID           
+          ports:
+          - containerPort: 9000
+          imagePullPolicy: Always
+          livenessProbe:
+            httpGet:
+              path: /healthcheck
+              port: 9000
+            initialDelaySeconds: 30
+            timeoutSeconds: 30
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 10
+          readinessProbe:
+            httpGet:
+              path: /healthcheck
+              port: 9000
+            initialDelaySeconds: 30
+            timeoutSeconds: 30
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 10
+          resources:
+            requests:
+              memory: 1024Mi
+              cpu: 500m
+            limits:
+              memory: 2048Mi
+              cpu: 500m
+    triggers:
+    - type: ConfigChange
+    - type: ImageChange
+      imageChangeParams:
+        automatic: true
+        containerNames:
+        - "a-bdso-cognito"
+        from:
+          kind: ImageStream
+          name: "a-bdso-cognito-is:1.0.0"
+
+- kind: HorizontalPodAutoscaler
+  apiVersion: extensions/v1beta1
+  metadata:
+    name: a-bdso-cognito-opr-hpa
+  spec:
+    scaleTargetRef:
+      kind: DeploymentConfig
+      name: a-bdso-cognito-opr-dc
+    scaleRef:
+      kind: DeploymentConfig
+      name: a-bdso-cognito-opr-dc
+      apiVersion: v1
+      subresource: scale
+    minReplicas: 1
+    maxReplicas: 5
+    cpuUtilization:
+      targetPercentage: 80
+
+#Application Service    
+- kind: Service
+  apiVersion: v1
+  metadata:
+    name: "a-bdso-cognito-opr-svc"
+  spec:
+    ports:
+    - name: bdso-cognito
+      port: 9000
+      targetPort: 9000
+    selector:
+      name: "a-bdso-cognito-opr-dc"
+#Route
+- kind: Route
+  apiVersion: v1
+  metadata:
+    name: "a-bdso-cognito"
+  spec:
+    tls:
+      termination: edge
+      insecureEdgeTerminationPolicy: Redirect
+    to:
+      kind: Service
+      name: "a-bdso-cognito-opr-svc"
+
+- kind: ImageStream
+  apiVersion: v1
+  metadata:
+    name: "a-bdso-cognito-is"
+  spec:
+    dockerImageRepository: "aceinfocoe"
+    importPolicy:
+      insecure: true
+    name: 1.0.0
+
+- kind: ImageStream
+  apiVersion: v1
+  metadata:
+    name: "b-bdso-cognito-is"
+  spec:
+    dockerImageRepository: "aceinfocoe"
+    importPolicy:
+      insecure: true
+    name: 1.0.0
+
+#Application B Deployment
+- kind: DeploymentConfig
+  apiVersion: v1
+  metadata:
+    name: "b-bdso-cognito-opr-dc"
+  spec:
+    replicas: 1
+    selector:
+      name: "b-bdso-cognito-opr-dc"
+    strategy:
+      type: Rolling
+    template:
+      metadata:
+        labels:
+          name: "b-bdso-cognito-opr-dc"
+      spec:
+        containers:
+        - name: "b-bdso-cognito"
+          image: "b-bdso-cognito-is"
+          env:
+          - name: AWS_ACCESS_KEY_ID
+            valueFrom:
+                configMapKeyRef:
+                  name: bdso-cognito-config-map 
+                  key: AWS_ACCESS_KEY_ID 
+          - name: AWS_DEFAULT_REGION
+            valueFrom:
+              configMapKeyRef:
+                name: bdso-cognito-config-map 
+                key: AWS_DEFAULT_REGION 
+          - name: AWS_SECRET_ACCESS_KEY
+            valueFrom:
+              configMapKeyRef:
+                name: bdso-cognito-config-map 
+                key: AWS_SECRET_ACCESS_KEY 
+          - name: CORS_FILTER
+            valueFrom:
+              configMapKeyRef:
+                name: bdso-cognito-config-map 
+                key: CORS_FILTER           
+          - name: COGNITO_CLIENT_ID
+            valueFrom:
+              configMapKeyRef:
+                name: bdso-cognito-config-map 
+                key: COGNITO_CLIENT_ID           
+          - name: COGNITO_POOL_ID
+            valueFrom:
+              configMapKeyRef:
+                name: bdso-cognito-config-map 
+                key: COGNITO_POOL_ID           
+          ports:
+          - containerPort: 9000
+          imagePullPolicy: Always
+          livenessProbe:
+            httpGet:
+              path: /healthcheck
+              port: 9000
+            initialDelaySeconds: 30
+            timeoutSeconds: 30
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 10
+          readinessProbe:
+            httpGet:
+              path: /healthcheck
+              port: 9000
+            initialDelaySeconds: 30
+            timeoutSeconds: 30
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 10
+          resources:
+            requests:
+              memory: 1024Mi
+              cpu: 500m
+            limits:
+              memory: 2048Mi
+              cpu: 500m
+    triggers:
+    - type: ConfigChange
+    - type: ImageChange
+      imageChangeParams:
+        automatic: true
+        containerNames:
+        - "b-bdso-cognito"
+        from:
+          kind: ImageStream
+          name: "b-bdso-cognito-is:1.0.0"
+
+#Application Service    
+- kind: Service
+  apiVersion: v1
+  metadata:
+    name: "b-bdso-cognito-opr-svc"
+  spec:
+    ports:
+    - name: bdso-cognito
+      port: 9000
+      targetPort: 9000
+    selector:
+      name: "b-bdso-cognito-opr-dc"
+#Route
+- kind: Route
+  apiVersion: v1
+  metadata:
+    name: "b-bdso-cognito"
+  spec:
+    tls:
+      termination: edge
+      insecureEdgeTerminationPolicy: Redirect 
+    to:
+      kind: Service
+      name: "b-bdso-cognito-opr-svc"
+
+- kind: HorizontalPodAutoscaler
+  apiVersion: extensions/v1beta1
+  metadata:
+    name: b-bdso-cognito-opr-hpa
+  spec:
+    scaleTargetRef:
+      kind: DeploymentConfig
+      name: b-bdso-cognito-opr-dc
+    scaleRef:
+      kind: DeploymentConfig
+      name: b-bdso-cognito-opr-dc
+      apiVersion: v1
+      subresource: scale
+    minReplicas: 1
+    maxReplicas: 5
+    cpuUtilization:
+      targetPercentage: 80

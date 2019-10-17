@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<APIProxy revision="1" name="firstmicroservicetest">
+	<Basepaths>/</Basepaths>
+	<ConfigurationVersion majorVersion="4"
+		minorVersion="0" />
+	<Description>API Configuration for BDSO Cognito API</Description>
+	<DisplayName>BDSO Cognito API Test</DisplayName>
+	<Policies>
+		<Policy>remove-query-param-apikey</Policy>
+		<Policy>verify-api-key</Policy>
+	</Policies>
+	<ProxyEndpoints>
+		<ProxyEndpoint>default</ProxyEndpoint>
+	</ProxyEndpoints>
+	<Resources />
+	<Spec></Spec>
+	<TargetServers />
+	<TargetEndpoints>
+		<TargetEndpoint>default</TargetEndpoint>
+	</TargetEndpoints>
+</APIProxy>
