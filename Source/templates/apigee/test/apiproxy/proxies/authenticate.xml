@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <ProxyEndpoint name="authenticate">
-    <Description>API Proxy for Cognito API</Description>
+    <Description>API Proxy for BDSO Cognito API</Description>
     <FaultRules/>
     <PreFlow name="PreFlow">
         <Request>
