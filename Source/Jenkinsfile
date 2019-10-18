@@ -187,8 +187,13 @@ node('master') {
                                 ${oc} secrets link default "nexus-${testProjectName}" --for=pull
                                 ${oc} secrets link builder "nexus-${testProjectName}" --for=pull
                                 ${oc} secrets link deployer "nexus-${testProjectName}" --for=pull
-                                ${oc} create configmap ${osConfigMapName} $TEST_CONFIG
                             """                
+                        }
+                        try {
+                            sh """
+                                ${oc} create configmap ${osConfigMapName} $TEST_CONFIG
+                            """         
+                        } catch (Exception e) {
                         }
                         sh """
                             ${oc} process -f ${testTemplateName} | ${oc} apply -f - -n ${testProjectName}
@@ -272,8 +277,13 @@ node('master') {
                                 ${oc} secrets link default "nexus-${prodProjectName}" --for=pull
                                 ${oc} secrets link builder "nexus-${prodProjectName}" --for=pull
                                 ${oc} secrets link deployer "nexus-${prodProjectName}" --for=pull
-                                ${oc} create configmap ${osConfigMapName} $PROD_CONFIG
                             """                
+                        }
+                        try {
+                            sh """
+                                ${oc} create configmap ${osConfigMapName} $PROD_CONFIG
+                            """         
+                        } catch (Exception e) {
                         }
                         sh """
                             ${oc} process -f ${prodTemplateName} | ${oc} apply -f - -n ${prodProjectName}
