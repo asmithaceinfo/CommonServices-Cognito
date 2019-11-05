@@ -13,13 +13,13 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.aceinfo.commonservices.security.api.cognito.models.AuthenticationRequest;
 import com.aceinfo.commonservices.security.api.cognito.services.CognitoService;
@@ -50,19 +50,28 @@ import com.amazonaws.services.cognitoidp.model.ListGroupsResult;
 import com.amazonaws.services.cognitoidp.model.UserNotFoundException;
 import com.amazonaws.services.cognitoidp.model.UsernameExistsException;
 
-@Controller
+
+
+
+@RestController
 public class CognitoController {
 	@Value("${cognito_pool_id}")
 	private String								cognitoPoolId;
 	@Value("${cognito_client_id}")
 	private String								cognitoClientId;
-	private final CognitoService				cognitoService;
+	/*@Autowired
+	private final CognitoService				cognitoService;*/
+	@Autowired
+	private CognitoService				        cognitoService;
 	private static AWSCognitoIdentityProvider	cognitoClient	= AWSCognitoIdentityProviderClientBuilder.defaultClient();
 
-	@Autowired
+    
+	/*@Autowired
 	public CognitoController(CognitoService cognitoService) {
 		this.cognitoService = cognitoService;
-	}
+	}*/
+	
+	
 
 	@PostMapping(path = AppConstants.ENDPOINT_VALIDATETOKEN)
 	public ResponseEntity<Object> validateUserSession(@RequestBody AuthenticationRequest authRequest) {
@@ -83,9 +92,10 @@ public class CognitoController {
 	public ResponseEntity<Object> confirmNewUser(@RequestBody AuthenticationRequest authRequest) {
 		return cognitoService.confirmNewUser(authRequest, cognitoPoolId, cognitoClientId);
 	}
-
+	
 	@PostMapping(path = AppConstants.ENDPOINT_ADDUSER)
-	public ResponseEntity<Object> addUser(ModelMap model, @RequestBody Object o) {
+	@PreAuthorize("hasAnyAuthority('Administrator')")
+	public ResponseEntity<Object> addUser( @RequestBody Object o) {
 		JSONObject							j				= new JSONObject((Map<?, ?>) o);
 		String								userName		= j.getString(AppConstants.ATTRIBUTES_COGNITO_USERNAME).toLowerCase();
 		String								emailAddress	= j.getString(AppConstants.ATTRIBUTES_COGNITO_EMAIL).toLowerCase();
@@ -129,7 +139,8 @@ public class CognitoController {
 	}
 
 	@DeleteMapping(path = AppConstants.ENDPOINT_DELETEUSER)
-	public ResponseEntity<Object> deleteUser(ModelMap model, @RequestBody Object o) {
+	@PreAuthorize("hasAnyAuthority('Administrator')")
+	public ResponseEntity<Object> deleteUser( @RequestBody Object o) {
 		JSONObject				j				= new JSONObject((Map<?, ?>) o);
 		String					userName		= j.getString(AppConstants.ATTRIBUTES_COGNITO_USERNAME).toLowerCase();
 		AdminDeleteUserRequest	cognitoRequest	= new AdminDeleteUserRequest().withUserPoolId(cognitoPoolId).withUsername(userName);
@@ -142,7 +153,8 @@ public class CognitoController {
 	}
 
 	@PostMapping(path = AppConstants.ENDPOINT_DISABLEUSER)
-	public ResponseEntity<Object> disableUser(ModelMap model, @RequestBody Object o) {
+	@PreAuthorize("hasAnyAuthority('Administrator')")
+	public ResponseEntity<Object> disableUser(@RequestBody Object o) {
 		JSONObject				j				= new JSONObject((Map<?, ?>) o);
 		String					userName		= j.getString(AppConstants.ATTRIBUTES_COGNITO_USERNAME).toLowerCase();
 		AdminDisableUserRequest	cognitoRequest	= new AdminDisableUserRequest().withUserPoolId(cognitoPoolId).withUsername(userName);
@@ -157,7 +169,8 @@ public class CognitoController {
 	}
 
 	@PostMapping(path = AppConstants.ENDPOINT_ENABLEUSER)
-	public ResponseEntity<Object> enableUser(ModelMap model, @RequestBody Object o) {
+	@PreAuthorize("hasAnyAuthority('Administrator')")
+	public ResponseEntity<Object> enableUser(@RequestBody Object o) {
 		JSONObject				j				= new JSONObject((Map<?, ?>) o);
 		String					userName		= j.getString(AppConstants.ATTRIBUTES_COGNITO_USERNAME).toLowerCase();
 		AdminEnableUserRequest	cognitoRequest	= new AdminEnableUserRequest().withUserPoolId(cognitoPoolId).withUsername(userName);
@@ -172,7 +185,8 @@ public class CognitoController {
 	}
 
 	@PostMapping(path = AppConstants.ENDPOINT_UPDATEUSER)
-	public ResponseEntity<Object> updateUser(ModelMap model, @RequestBody Object o) {
+	@PreAuthorize("hasAnyAuthority('Administrator')")
+	public ResponseEntity<Object> updateUser(@RequestBody Object o) {
 		JSONObject							j				= new JSONObject((Map<?, ?>) o);
 		String								userName		= j.getString(AppConstants.ATTRIBUTES_COGNITO_USERNAME).toLowerCase();
 		String								emailAddress	= j.getString("email");
@@ -260,7 +274,8 @@ public class CognitoController {
 	}
 
 	@PostMapping(path = AppConstants.ENDPOINT_UPDATEUSERGROUPS)
-	public ResponseEntity<Object> updateUserGroups(ModelMap model, @RequestBody Object o) {
+	@PreAuthorize("hasAnyAuthority('Administrator')")
+	public ResponseEntity<Object> updateUserGroups(@RequestBody Object o) {
 		JSONObject						j			= new JSONObject((Map<?, ?>) o);
 		String							userName	= j.getString("username").toLowerCase();
 		JSONArray						groups		= j.getJSONArray("groups");

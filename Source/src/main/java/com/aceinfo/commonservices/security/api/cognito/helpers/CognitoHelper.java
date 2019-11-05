@@ -63,8 +63,8 @@ public class CognitoHelper {
 			List<AttributeType> cognitoUserAttributes = getUserDetailsResult.getUserAttributes();
 			userMap = ApplicationUtility.convertCognitoAttributesToMap(cognitoUserAttributes);
 			userAuthRequest.setUserEmail(userMap.get("email"));
-			userAuthRequest.setFirstName(userMap.get("given_name"));
-			userAuthRequest.setLastName(userMap.get("family_name"));
+			userAuthRequest.setFirstName(userMap.get("firstname"));
+			userAuthRequest.setLastName(userMap.get("lastname"));
 		} catch (UserNotFoundException userNotFoundException) {
 			throw userNotFoundException;
 		} catch (NotAuthorizedException notAuthorizedException) {

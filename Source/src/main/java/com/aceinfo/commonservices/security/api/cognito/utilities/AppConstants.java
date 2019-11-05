@@ -60,8 +60,8 @@ public class AppConstants {
 	
 	
 	public static final String ATTRIBUTES_COGNITO_EMAIL = "email";
-	public static final String ATTRIBUTES_COGNITO_FAMILYNAME = "family_name";
-	public static final String ATTRIBUTES_COGNITO_GIVENNAME = "given_name";
+	public static final String ATTRIBUTES_COGNITO_FAMILYNAME = "custom:lastname";
+	public static final String ATTRIBUTES_COGNITO_GIVENNAME = "custom:firstname";
 	public static final String ATTRIBUTES_COGNITO_USERNAME = "username";
 	public static final String ATTRIBUTES_COGNITO_USERPASS = "password";
 	public static final String ATTRIBUTES_COGNITO_USERNEWPASS = "new_password";

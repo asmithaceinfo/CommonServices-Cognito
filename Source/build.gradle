@@ -42,9 +42,13 @@ repositories {
 }
 
 dependencies {
+
+
+   // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-oauth2-client
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-oauth2-client', version: '2.1.0.RELEASE'
 	compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-rest', version: '2.1.4.RELEASE'
 
-	compile group: 'com.amazonaws', name: 'aws-java-sdk-cognitoidp', version: '1.11.546'
+	compile group: 'com.amazonaws', name: 'aws-java-sdk-cognitoidp', version: '1.11.653'
 	compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.8.1'
 
 	compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
@@ -54,17 +58,32 @@ dependencies {
 	compile group: 'org.json', name: 'json', version: '20180813'
 	compile group: 'com.jayway.jsonpath', name: 'json-path', version: '2.4.0'	
 	compile group: 'com.auth0', name: 'java-jwt', version: '3.8.0'
-	
+	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.2.0.RELEASE'
+    // https://mvnrepository.com/artifact/com.nimbusds/nimbus-jose-jwt
+	compile group: 'com.nimbusds', name: 'nimbus-jose-jwt', version: '8.2'
+    
 	annotationProcessor group: 'org.projectlombok', name: 'lombok', version: '1.18.8'
 	
 	compile group: 'org.jacoco', name: 'org.jacoco.core', version: '0.8.3'
+   // https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt
+	compile group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
+	// https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-api
+	compile group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.10.7'
 	
+	// https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-impl
+	runtime group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.10.7'
+	// https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-jackson
+	runtime group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.10.7'
+		
 	testCompile group: 'junit', name: 'junit', version: '4.12'
 
 	testCompile group: 'org.mockito', name: 'mockito-core', version: '2.28.2'
 	testCompile group: 'org.assertj', name: 'assertj-core', version: '3.12.2'
 	testCompile group: 'org.springframework', name: 'spring-test', version: '5.1.7.RELEASE'
 	testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '2.1.5.RELEASE'
+	// https://mvnrepository.com/artifact/junit/junit
+	testCompile group: 'junit', name: 'junit', version: '4.12'
 
 	compileOnly('org.projectlombok:lombok')
 	testCompile group: 'com.jayway.jsonpath', name: 'json-path-assert', version: '2.4.0'
