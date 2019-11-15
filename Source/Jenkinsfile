@@ -25,17 +25,17 @@ node('master') {
             def projectTagName = "bdso-cognito"   
 
             def testProjectName = "bdso-test"
-            def testConfigMapKeyValues = "testConfigMapKeyVal"
+            def testConfigMapKeyValues = "bdsoCognitoConfigMap"
             def testProjectDisplayName = "bdso-test"
             def testTemplateName = "${artifactFilePath}templates/openshift/testing-template.yaml"
 
 			def stageProjectName = "bdso-stag"
-			def stageConfigMapKeyValues = "testConfigMapKeyVal"
+			def stageConfigMapKeyValues = "bdsoCognitoConfigMap"
 			def stageProjectDisplayName = "bdso-stag"
 			def stageTemplateName = "${artifactFilePath}templates/openshift/staging-template.yaml"
 
 			def prodProjectName = "bdso-prod"
-			def prodConfigMapKeyValues = "testConfigMapKeyVal"
+			def prodConfigMapKeyValues = "bdsoCognitoConfigMap"
 			def prodProjectDisplayName = "bdso-prod"
 			def prodTemplateName = "${artifactFilePath}templates/openshift/production-template.yaml"
 
