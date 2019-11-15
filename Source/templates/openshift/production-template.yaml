@@ -121,23 +121,16 @@ objects:
           name: "a-bdso-cognito-is:1.0.0"
 
 - kind: HorizontalPodAutoscaler
-  apiVersion: extensions/v1beta1
+  apiVersion: autoscaling/v1
   metadata:
     name: a-bdso-cognito-opr-hpa
   spec:
     scaleTargetRef:
       kind: DeploymentConfig
       name: a-bdso-cognito-opr-dc
-    scaleRef:
-      kind: DeploymentConfig
-      name: a-bdso-cognito-opr-dc
-      apiVersion: v1
-      subresource: scale
     minReplicas: 1
     maxReplicas: 5
-    cpuUtilization:
-      targetPercentage: 80
-
+    targetCPUUtilizationPercentage: 70
 #Application Service    
 - kind: Service
   apiVersion: v1
@@ -298,19 +291,13 @@ objects:
       name: "b-bdso-cognito-opr-svc"
 
 - kind: HorizontalPodAutoscaler
-  apiVersion: extensions/v1beta1
+  apiVersion: autoscaling/v1
   metadata:
     name: b-bdso-cognito-opr-hpa
   spec:
     scaleTargetRef:
       kind: DeploymentConfig
       name: b-bdso-cognito-opr-dc
-    scaleRef:
-      kind: DeploymentConfig
-      name: b-bdso-cognito-opr-dc
-      apiVersion: v1
-      subresource: scale
     minReplicas: 1
     maxReplicas: 5
-    cpuUtilization:
-      targetPercentage: 80
+    targetCPUUtilizationPercentage: 70
