@@ -62,7 +62,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
               .authenticated() // Protected API End-points
       .and()
       .addFilterBefore(authTokenFilterBean(),
-    	      UsernamePasswordAuthenticationFilter.class).oauth2Login();
+    	      UsernamePasswordAuthenticationFilter.class);
+      //.oauth2Login();
 
   
   } 
