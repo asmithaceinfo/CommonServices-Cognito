@@ -142,7 +142,11 @@ public class CognitoServiceImpl implements CognitoService {
 		} catch (NullPointerException npe) {
 			logger.error(npe.getMessage());
 		}
-		return new ResponseEntity<>(userAuthRequest, responseHeaders, status);
+		if (!exceptionOccured) {
+			return new ResponseEntity<>(userAuthRequest, HttpStatus.OK);
+		}else {
+		return new ResponseEntity<>(out.toString(), responseHeaders, status);
+		}
 	}
 
 	public ResponseEntity<Object> confirmNewUser(AuthenticationRequest userAuthRequest, String cognitoPoolId, String cognitoClientId) {
