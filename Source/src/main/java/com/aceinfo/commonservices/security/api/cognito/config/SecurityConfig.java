@@ -27,7 +27,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
   protected void configure(HttpSecurity http) throws Exception {
 
 
-	  http
+	  http.cors().and()
       .csrf().disable() // We don't need CSRF for JWT based authentication
       .sessionManagement()
           .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
