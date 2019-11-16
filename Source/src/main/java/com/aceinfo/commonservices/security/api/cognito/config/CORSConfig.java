@@ -19,8 +19,9 @@ public class CORSConfig implements WebMvcConfigurer {
 	public void addCorsMappings(CorsRegistry registry) {
 	  registry.addMapping("/**")
 	   	  .allowedOrigins(customCORSFilter, "http://localhost:9000", "http://localhost:8080", "http://localhost:4200", "http://localhost:9001", "https://*.apps.aceinfosolutions.com")
-		  .allowedMethods("POST", "GET",  "PUT", "OPTIONS", "DELETE")
-		  //.allowedHeaders("*")
+		  //.allowedMethods("POST", "GET",  "PUT", "OPTIONS", "DELETE")
+	   	.allowedMethods("GET", "POST", "PUT", "DELETE")
+		  .allowedHeaders("*")
 		  .allowCredentials(true)
 		  .maxAge(4800);
 	}
