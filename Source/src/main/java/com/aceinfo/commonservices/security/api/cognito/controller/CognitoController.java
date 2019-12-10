@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,6 +27,7 @@ import com.aceinfo.commonservices.security.api.cognito.services.CognitoService;
 import com.aceinfo.commonservices.security.api.cognito.utilities.AppConstants;
 import com.aceinfo.commonservices.security.api.cognito.utilities.ApplicationUtility;
 import com.amazonaws.services.cognitoidp.AWSCognitoIdentityProvider;
+import com.amazonaws.services.cognitoidp.AWSCognitoIdentityProviderClient;
 import com.amazonaws.services.cognitoidp.AWSCognitoIdentityProviderClientBuilder;
 import com.amazonaws.services.cognitoidp.model.AdminAddUserToGroupRequest;
 import com.amazonaws.services.cognitoidp.model.AdminCreateUserRequest;
@@ -54,6 +56,7 @@ import com.amazonaws.services.cognitoidp.model.UsernameExistsException;
 
 
 @RestController
+@CrossOrigin(origins = "*")
 public class CognitoController {
 	@Value("${cognito_pool_id}")
 	private String								cognitoPoolId;
@@ -64,7 +67,8 @@ public class CognitoController {
 	@Autowired
 	private CognitoService				        cognitoService;
 	private static AWSCognitoIdentityProvider	cognitoClient	= AWSCognitoIdentityProviderClientBuilder.defaultClient();
-
+	//private AWSCredentialsProvider credProvider
+	//private static AWSCognitoIdentityProvider cognitoCli = AWSCognitoIdentityProviderClientBuilder.standard().withCredentials(credentialsProvider)
     
 	/*@Autowired
 	public CognitoController(CognitoService cognitoService) {
@@ -78,6 +82,7 @@ public class CognitoController {
 		return cognitoService.validateUserSession(authRequest, cognitoPoolId, cognitoClientId);
 	}
 
+	@CrossOrigin(origins = "*", maxAge = 3600)
 	@PostMapping(path = AppConstants.ENDPOINT_AUTHENTICATE)
 	public ResponseEntity<Object> authenticateUser(@RequestBody AuthenticationRequest authRequest) {
 		boolean validRequest = ApplicationUtility.validateAuthenticationRequest(authRequest);
