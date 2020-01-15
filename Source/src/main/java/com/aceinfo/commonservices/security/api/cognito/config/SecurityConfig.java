@@ -46,6 +46,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
+		logger.error("in our security config");
 		http.cors().and().csrf().disable() // We don't need CSRF for JWT based authentication
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests().antMatchers("/actuator/**").permitAll()
 				.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
@@ -59,6 +60,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/test/**").permitAll()
 				.antMatchers("/swagger-resources/configuration/ui").permitAll()
 				.antMatchers("/swagger*").permitAll()
+				.antMatchers("/addUser/**").permitAll()
 				
 				
 				.antMatchers(HttpMethod.GET,"/v2/api-docs", "/webjars/**", "/swagger-resources/**", "/configuration/**", "/*.html", "/favicon.ico", "/**/*.html", "/**/*.css", "/**/*.js").permitAll()

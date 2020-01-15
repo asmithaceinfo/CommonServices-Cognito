@@ -7,6 +7,8 @@ import java.util.Map;
 import org.apache.commons.lang3.NotImplementedException;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.aceinfo.commonservices.security.api.cognito.config.SecurityConfig;
 import com.aceinfo.commonservices.security.api.cognito.models.AuthenticationRequest;
 import com.aceinfo.commonservices.security.api.cognito.services.CognitoService;
 import com.aceinfo.commonservices.security.api.cognito.utilities.AppConstants;
@@ -58,6 +61,8 @@ import com.amazonaws.services.cognitoidp.model.UsernameExistsException;
 @RestController
 @CrossOrigin(origins = "*")
 public class CognitoController {
+	private static final Logger logger = LoggerFactory.getLogger(CognitoController.class);
+
 	@Value("${cognito_pool_id}")
 	private String								cognitoPoolId;
 	@Value("${cognito_client_id}")
@@ -99,26 +104,30 @@ public class CognitoController {
 	}
 	
 	@PostMapping(path = AppConstants.ENDPOINT_ADDUSER)
-	@PreAuthorize("hasAnyAuthority('Administrator')")
+	//@PreAuthorize("hasAnyAuthority('Administrator')")
 	public ResponseEntity<Object> addUser( @RequestBody Object o) {
+		logger.error("begin adduser method");
 		JSONObject							j				= new JSONObject((Map<?, ?>) o);
 		String								userName		= j.getString(AppConstants.ATTRIBUTES_COGNITO_USERNAME).toLowerCase();
 		String								emailAddress	= j.getString(AppConstants.ATTRIBUTES_COGNITO_EMAIL).toLowerCase();
 		String								lastname		= j.getString("lastname");
 		String								firstname		= j.getString("firstname");
-		JSONArray							groups			= j.getJSONArray("roles");
+		//String								sessionToken	= j.getString("cognitoSession");
+		//JSONArray							groups			= j.getJSONArray("roles");
+		logger.error("after mashalling our json." + j);
 		AdminCreateUserRequest				cognitoRequest	= new AdminCreateUserRequest().withUserPoolId(cognitoPoolId).withUsername(userName)
 				.withUserAttributes(new AttributeType().withName(AppConstants.ATTRIBUTES_COGNITO_EMAIL).withValue(emailAddress),
 						new AttributeType().withName("email_verified").withValue("true"),
 						new AttributeType().withName(AppConstants.ATTRIBUTES_COGNITO_FAMILYNAME).withValue(lastname),
 						new AttributeType().withName(AppConstants.ATTRIBUTES_COGNITO_GIVENNAME).withValue(firstname))
+//						new AttributeType().withName("cognitoSession").withValue(sessionToken))
 				.withDesiredDeliveryMediums(DeliveryMediumType.EMAIL).withForceAliasCreation(Boolean.FALSE);
 		List<AdminAddUserToGroupRequest>	roleRequests	= new ArrayList<>();
-		for (int i = 0; i < groups.length(); i++) {
-			String						role	= groups.getString(i);
-			AdminAddUserToGroupRequest	request	= new AdminAddUserToGroupRequest().withUserPoolId(cognitoPoolId).withUsername(userName).withGroupName(role);
-			roleRequests.add(request);
-		}
+		//for (int i = 0; i < groups.length(); i++) {
+		//	String						role	= groups.getString(i);
+		//	AdminAddUserToGroupRequest	request	= new AdminAddUserToGroupRequest().withUserPoolId(cognitoPoolId).withUsername(userName).withGroupName(role);
+		//	roleRequests.add(request);
+		//}
 		try {
 			cognitoClient.adminCreateUser(cognitoRequest);
 		} catch (UsernameExistsException e) {
@@ -129,7 +138,7 @@ public class CognitoController {
 			}
 		} catch (Exception e) {
 			throw new NotImplementedException("Other Error on CreateUser \nAWS Cognito Error: " + e.getMessage().trim());
-		}
+		}/*
 		try {
 			for (AdminAddUserToGroupRequest request : roleRequests) {
 				cognitoClient.adminAddUserToGroup(request);
@@ -138,7 +147,7 @@ public class CognitoController {
 			throw new NotImplementedException("User was not found \nAWS Cognito Error: " + e.getMessage().trim());
 		} catch (Exception e) {
 			throw new NotImplementedException("Other Error on AddUserToGroup \nAWS Cognito Error: " + e.getMessage().trim());
-		}
+		}*/
 		ResponseEntity<Object> lstResult = getUsers();
 		return new ResponseEntity<>(lstResult.getBody(), HttpStatus.OK);
 	}
