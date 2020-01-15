@@ -106,7 +106,7 @@ public class CognitoController {
 	}
 	
 	@PostMapping(path = AppConstants.ENDPOINT_ADDUSER)
-	//@PreAuthorize("hasAnyAuthority('Administrator')")
+	@PreAuthorize("hasAnyAuthority('Administrator')")
 	public ResponseEntity<Object> addUser( @RequestBody Object o) {
 		logger.error("begin adduser method");
 		JSONObject							j				= new JSONObject((Map<?, ?>) o);
@@ -167,12 +167,6 @@ public class CognitoController {
 						new AttributeType().withName(AppConstants.ATTRIBUTES_COGNITO_FAMILYNAME).withValue(lastname),
 						new AttributeType().withName(AppConstants.ATTRIBUTES_COGNITO_GIVENNAME).withValue(firstname)
 						);
-		AdminCreateUserRequest				oldCognitoRequest	= new AdminCreateUserRequest().withUserPoolId(cognitoPoolId).withUsername(userName)
-				.withUserAttributes(new AttributeType().withName(AppConstants.ATTRIBUTES_COGNITO_EMAIL).withValue(emailAddress),
-						new AttributeType().withName("email_verified").withValue("true"),
-						new AttributeType().withName(AppConstants.ATTRIBUTES_COGNITO_FAMILYNAME).withValue(lastname),
-						new AttributeType().withName(AppConstants.ATTRIBUTES_COGNITO_GIVENNAME).withValue(firstname))
-				.withDesiredDeliveryMediums(DeliveryMediumType.EMAIL).withForceAliasCreation(Boolean.FALSE);
 		try {
 			cognitoClient.signUp(cognitoRequest);
 		} catch (UsernameExistsException e) {
@@ -190,11 +184,10 @@ public class CognitoController {
 	
 	@PostMapping(path = AppConstants.ENDPOINT_CONFIRM_SIGNUP)
 	public ResponseEntity<Object> confirmSignUp( @RequestBody Object o) {
-		logger.error("begin adduser method");
+		logger.error("begin confirmSignUp method");
 		JSONObject							j				= new JSONObject((Map<?, ?>) o);
 		String								userName		= j.getString(AppConstants.ATTRIBUTES_COGNITO_USERNAME).toLowerCase();
 		String								confirmationCode		= j.getString("confirmationcode");
-		logger.error("after mashalling our json." + j);
 		ConfirmSignUpRequest cognitoRequest = new ConfirmSignUpRequest().withClientId(cognitoClientId)
 				.withConfirmationCode(confirmationCode)
 				.withUsername(userName);
