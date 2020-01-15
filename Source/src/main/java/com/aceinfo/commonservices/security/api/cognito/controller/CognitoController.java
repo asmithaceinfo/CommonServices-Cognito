@@ -45,6 +45,7 @@ import com.amazonaws.services.cognitoidp.model.AliasExistsException;
 import com.amazonaws.services.cognitoidp.model.AttributeType;
 import com.amazonaws.services.cognitoidp.model.ConfirmForgotPasswordRequest;
 import com.amazonaws.services.cognitoidp.model.ConfirmForgotPasswordResult;
+import com.amazonaws.services.cognitoidp.model.ConfirmSignUpRequest;
 import com.amazonaws.services.cognitoidp.model.DeliveryMediumType;
 import com.amazonaws.services.cognitoidp.model.ForgotPasswordRequest;
 import com.amazonaws.services.cognitoidp.model.ForgotPasswordResult;
@@ -52,6 +53,7 @@ import com.amazonaws.services.cognitoidp.model.GroupType;
 import com.amazonaws.services.cognitoidp.model.LimitExceededException;
 import com.amazonaws.services.cognitoidp.model.ListGroupsRequest;
 import com.amazonaws.services.cognitoidp.model.ListGroupsResult;
+import com.amazonaws.services.cognitoidp.model.SignUpRequest;
 import com.amazonaws.services.cognitoidp.model.UserNotFoundException;
 import com.amazonaws.services.cognitoidp.model.UsernameExistsException;
 
@@ -130,6 +132,104 @@ public class CognitoController {
 		//}
 		try {
 			cognitoClient.adminCreateUser(cognitoRequest);
+		} catch (UsernameExistsException e) {
+			if (e.getMessage().contains(AppConstants.ATTRIBUTES_COGNITO_EMAIL)) {
+				throw new NotImplementedException("TODO: User with this email already exists\nAWS Cognito Error: " + e.getMessage().trim());
+			} else {
+				throw new NotImplementedException("TODO: Username exists " + e.getMessage().trim());
+			}
+		} catch (Exception e) {
+			throw new NotImplementedException("Other Error on CreateUser \nAWS Cognito Error: " + e.getMessage().trim());
+		}/*
+		try {
+			for (AdminAddUserToGroupRequest request : roleRequests) {
+				cognitoClient.adminAddUserToGroup(request);
+			}
+		} catch (UserNotFoundException e) {
+			throw new NotImplementedException("User was not found \nAWS Cognito Error: " + e.getMessage().trim());
+		} catch (Exception e) {
+			throw new NotImplementedException("Other Error on AddUserToGroup \nAWS Cognito Error: " + e.getMessage().trim());
+		}*/
+		ResponseEntity<Object> lstResult = getUsers();
+		return new ResponseEntity<>(lstResult.getBody(), HttpStatus.OK);
+	}
+	
+	@PostMapping(path = AppConstants.ENDPOINT_SIGNUP)
+	//@PreAuthorize("hasAnyAuthority('Administrator')")
+	public ResponseEntity<Object> signUp( @RequestBody Object o) {
+		logger.error("begin adduser method");
+		JSONObject							j				= new JSONObject((Map<?, ?>) o);
+		String								userName		= j.getString(AppConstants.ATTRIBUTES_COGNITO_USERNAME).toLowerCase();
+		String								emailAddress	= j.getString(AppConstants.ATTRIBUTES_COGNITO_EMAIL).toLowerCase();
+		String								lastname		= j.getString("lastname");
+		String								firstname		= j.getString("firstname");
+		String								password		= j.getString("password");
+		logger.error("after mashalling our json." + j);
+		SignUpRequest cognitoRequest = new SignUpRequest().withClientId(cognitoClientId).withUsername(userName).withPassword(password)
+				.withUserAttributes(new AttributeType().withName(AppConstants.ATTRIBUTES_COGNITO_EMAIL).withValue(emailAddress),
+						//new AttributeType().withName("email_verified").withValue("true"),
+						new AttributeType().withName(AppConstants.ATTRIBUTES_COGNITO_FAMILYNAME).withValue(lastname),
+						new AttributeType().withName(AppConstants.ATTRIBUTES_COGNITO_GIVENNAME).withValue(firstname)
+						//new AttributeType().withName("passWord").withValue(password)
+						);
+				//.withDesiredDeliveryMediums(DeliveryMediumType.EMAIL).withForceAliasCreation(Boolean.FALSE);
+		AdminCreateUserRequest				oldCognitoRequest	= new AdminCreateUserRequest().withUserPoolId(cognitoPoolId).withUsername(userName)
+				.withUserAttributes(new AttributeType().withName(AppConstants.ATTRIBUTES_COGNITO_EMAIL).withValue(emailAddress),
+						new AttributeType().withName("email_verified").withValue("true"),
+						new AttributeType().withName(AppConstants.ATTRIBUTES_COGNITO_FAMILYNAME).withValue(lastname),
+						new AttributeType().withName(AppConstants.ATTRIBUTES_COGNITO_GIVENNAME).withValue(firstname))
+				.withDesiredDeliveryMediums(DeliveryMediumType.EMAIL).withForceAliasCreation(Boolean.FALSE);
+		try {
+			cognitoClient.signUp(cognitoRequest);
+			//cognitoClient.adminCreateUser(cognitoRequest);
+		} catch (UsernameExistsException e) {
+			if (e.getMessage().contains(AppConstants.ATTRIBUTES_COGNITO_EMAIL)) {
+				throw new NotImplementedException("TODO: User with this email already exists\nAWS Cognito Error: " + e.getMessage().trim());
+			} else {
+				throw new NotImplementedException("TODO: Username exists " + e.getMessage().trim());
+			}
+		} catch (Exception e) {
+			throw new NotImplementedException("Other Error on CreateUser \nAWS Cognito Error: " + e.getMessage().trim());
+		}/*
+		try {
+			for (AdminAddUserToGroupRequest request : roleRequests) {
+				cognitoClient.adminAddUserToGroup(request);
+			}
+		} catch (UserNotFoundException e) {
+			throw new NotImplementedException("User was not found \nAWS Cognito Error: " + e.getMessage().trim());
+		} catch (Exception e) {
+			throw new NotImplementedException("Other Error on AddUserToGroup \nAWS Cognito Error: " + e.getMessage().trim());
+		}*/
+		ResponseEntity<Object> lstResult = getUsers();
+		return new ResponseEntity<>(lstResult.getBody(), HttpStatus.OK);
+	}
+	
+	@PostMapping(path = AppConstants.ENDPOINT_CONFIRM_SIGNUP)
+	//@PreAuthorize("hasAnyAuthority('Administrator')")
+	public ResponseEntity<Object> confirmSignUp( @RequestBody Object o) {
+		logger.error("begin adduser method");
+		JSONObject							j				= new JSONObject((Map<?, ?>) o);
+		String								userName		= j.getString(AppConstants.ATTRIBUTES_COGNITO_USERNAME).toLowerCase();
+		String								emailAddress	= j.getString(AppConstants.ATTRIBUTES_COGNITO_EMAIL).toLowerCase();
+		String								confirmationCode		= j.getString("confirmationcode");
+		//String								firstname		= j.getString("firstname");
+		//String								password		= j.getString("password");
+		logger.error("after mashalling our json." + j);
+		ConfirmSignUpRequest cognitoRequest = new ConfirmSignUpRequest().withClientId(cognitoClientId)
+				.withConfirmationCode(confirmationCode)
+				.withUsername(userName);
+		
+				/*SignUpRequest cognitoRequest = new SignUpRequest().withClientId(cognitoClientId).withUsername(userName).withPassword(password)
+				.withUserAttributes(new AttributeType().withName(AppConstants.ATTRIBUTES_COGNITO_EMAIL).withValue(emailAddress),
+						//new AttributeType().withName("email_verified").withValue("true"),
+						new AttributeType().withName(AppConstants.ATTRIBUTES_COGNITO_FAMILYNAME).withValue(lastname),
+						new AttributeType().withName(AppConstants.ATTRIBUTES_COGNITO_GIVENNAME).withValue(firstname)
+						//new AttributeType().withName("passWord").withValue(password)
+						);
+		*/
+		try {
+			cognitoClient.confirmSignUp(cognitoRequest);
+			//cognitoClient.adminCreateUser(cognitoRequest);
 		} catch (UsernameExistsException e) {
 			if (e.getMessage().contains(AppConstants.ATTRIBUTES_COGNITO_EMAIL)) {
 				throw new NotImplementedException("TODO: User with this email already exists\nAWS Cognito Error: " + e.getMessage().trim());

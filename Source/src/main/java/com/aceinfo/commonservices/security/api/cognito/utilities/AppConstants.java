@@ -17,6 +17,8 @@ public class AppConstants {
 	public static final String ENDPOINT_DELETEUSER = "/deleteUser";
 	public static final String ENDPOINT_DISABLEUSER = "/disableUser";
 	public static final String ENDPOINT_ADDUSER = "/addUser";
+	public static final String ENDPOINT_SIGNUP = "/signUp";
+	public static final String ENDPOINT_CONFIRM_SIGNUP = "/signUpConfirm";
 	public static final String ENDPOINT_ENABLEUSER = "/enableUser";
 	public static final String ENDPOINT_UPDATEUSER = "/updateUser";
 	public static final String ENDPOINT_HEALTHCHECK = "/healthcheck";
