@@ -104,7 +104,7 @@ objects:
             httpGet:
               path: /healthcheck
               port: 9000
-            initialDelaySeconds: 45
+            initialDelaySeconds: 90
             timeoutSeconds: 180
             periodSeconds: 90
             successThreshold: 1
@@ -113,17 +113,17 @@ objects:
             httpGet:
               path: /healthcheck
               port: 9000
-            initialDelaySeconds: 45
+            initialDelaySeconds: 90
             timeoutSeconds: 180
             periodSeconds: 90
             successThreshold: 1
             failureThreshold: 10
           resources:
             requests:
-              memory: 500Mi
+              memory: 256Mi
               cpu: 100m
             limits:
-              memory: 500Mi
+              memory: 256Mi
               cpu: 100m
     triggers:
     - type: ConfigChange
