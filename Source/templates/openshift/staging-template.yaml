@@ -77,6 +77,11 @@ objects:
               configMapKeyRef:
                 name: bdso-cognito-config-map 
                 key: AWS_DEFAULT_REGION 
+          - name: AWS_REGION
+            valueFrom:
+              configMapKeyRef:
+                name: bdso-cognito-config-map 
+                key: AWS_REGION 
           - name: AWS_SECRET_ACCESS_KEY
             valueFrom:
               configMapKeyRef:
