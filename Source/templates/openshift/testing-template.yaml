@@ -105,8 +105,8 @@ objects:
               path: /healthcheck
               port: 9000
             initialDelaySeconds: 45
-            timeoutSeconds: 30
-            periodSeconds: 45
+            timeoutSeconds: 180
+            periodSeconds: 90
             successThreshold: 1
             failureThreshold: 10
           readinessProbe:
@@ -114,17 +114,17 @@ objects:
               path: /healthcheck
               port: 9000
             initialDelaySeconds: 45
-            timeoutSeconds: 30
-            periodSeconds: 45
+            timeoutSeconds: 180
+            periodSeconds: 90
             successThreshold: 1
             failureThreshold: 10
           resources:
             requests:
-              memory: 2048Mi
-              cpu: 1000m
+              memory: 500Mi
+              cpu: 100m
             limits:
-              memory: 2048Mi
-              cpu: 1000m
+              memory: 500Mi
+              cpu: 100m
     triggers:
     - type: ConfigChange
     - type: ImageChange
