@@ -1,19 +1,13 @@
 package com.aceinfo.commonservices.security.api.cognito.config;
 
-import javax.annotation.PostConstruct;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.amazonaws.auth.AWSCredentialsProvider;
-import com.amazonaws.auth.AWSSessionCredentials;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
-import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
-import com.amazonaws.auth.EnvironmentVariableCredentialsProvider;
 import com.amazonaws.services.cognitoidp.AWSCognitoIdentityProvider;
 import com.amazonaws.services.cognitoidp.AWSCognitoIdentityProviderClientBuilder;
 
@@ -25,7 +19,7 @@ public class CognitoConfig {
 	private String								awsAccessKey;
 	@Value("${AWS_SECRET_ACCESS_KEY}")
 	private String								awsSecretKey;
-	@Value("${aws_region}")
+	@Value("${AWS_REGION}")
 	private String								awsRegion;
 
 	
