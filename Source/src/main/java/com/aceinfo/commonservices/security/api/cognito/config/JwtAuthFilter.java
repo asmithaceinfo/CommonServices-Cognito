@@ -31,15 +31,15 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 	@Override
 	protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain chain)
 			throws IOException, ServletException {
-		logger.error("Inside doFilterInternal");
+		logger.info("Inside doFilterInternal");
 		String header = null;
 		String authorization = req.getHeader("Authorization");
 		if (authorization != null) {
-			logger.error("Inside doFilterInternal, authorization is not null. req:" + req);
+			logger.debug("Inside doFilterInternal, authorization is not null. req:" + req);
 
 			header = resolveToken(req);
 
-			logger.info(header);
+			logger.debug(header);
 			 if (StringUtils.hasText(header) && this.tokenProvider.validateToken(header)) {
 				try {
 					
@@ -54,14 +54,14 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 				}
 			}
 		}
-		logger.error("before doing filter");
+		logger.debug("before doing filter");
 		chain.doFilter(req, res);
 
 	}
 
 	private String resolveToken(HttpServletRequest request) {
 		String bearerToken = request.getHeader(AUTH_HEADER_STRING);
-		logger.error("In resolveToken, bearer:" + bearerToken);
+		logger.info("In resolveToken, bearer:" + bearerToken);
 		if (StringUtils.hasText(bearerToken)) {// && bearerToken.startsWith(AUTH_BEARER_STRING)) {
 			return bearerToken;//.replace(AUTH_BEARER_STRING, "");
 		}

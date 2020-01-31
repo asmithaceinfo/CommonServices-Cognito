@@ -148,7 +148,7 @@ public class CognitoController {
 			throw new NotImplementedException("Other Error on AddUserToGroup \nAWS Cognito Error: " + e.getMessage().trim());
 		}
 		ResponseEntity<Object> lstResult = getUsers();
-		return new ResponseEntity<>(lstResult.getBody(), HttpStatus.OK);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	@PostMapping(path = AppConstants.ENDPOINT_SIGNUP)
@@ -178,7 +178,7 @@ public class CognitoController {
 			throw new NotImplementedException("Other Error on CreateUser \nAWS Cognito Error: " + e.getMessage().trim());
 		}
 		//ResponseEntity<Object> lstResult = getUsers();
-		return new ResponseEntity<>("OK", HttpStatus.OK);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	@PostMapping(path = AppConstants.ENDPOINT_CONFIRM_SIGNUP)
@@ -204,7 +204,7 @@ public class CognitoController {
 		}
 
 		//ResponseEntity<Object> lstResult = getUsers();
-		return new ResponseEntity<>("OK", HttpStatus.OK);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 	@DeleteMapping(path = AppConstants.ENDPOINT_DELETEUSER)
