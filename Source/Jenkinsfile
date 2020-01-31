@@ -169,8 +169,8 @@ node('master') {
             stage ('Rolling Deployment (Test Env)') {
                 withCredentials([
                     [$class: 'UsernamePasswordMultiBinding', credentialsId: nexusCredentialId, usernameVariable: 'NEXUS_USERNAME', passwordVariable: 'NEXUS_PASSWORD'],
-                    [string(credentialsId: openShiftCredential, variable: 'OSTOKEN')],
-                    [string(credentialsId: testConfigMapKeyValues, variable: 'TEST_CONFIG')]
+                    string(credentialsId: openShiftCredential, variable: 'OSTOKEN'),
+                    string(credentialsId: testConfigMapKeyValues, variable: 'TEST_CONFIG')
                     ]) {
                         sh """
                             ${oc} login --server=${openShiftHost} --token=${OSTOKEN}
