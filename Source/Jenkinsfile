@@ -7,7 +7,7 @@ node('master') {
             
             def nexusRegistryURL = 'nexus.aceinfosolutions.com:8441'
             def nexusRepoUser	=	'aceinfocoe'
-            def nexusCredentialId = '41aebb46-b195-4957-bae0-78376aa149b0'
+            def nexusCredentialId = 'AceInfoCoECreds'
             def nexusEmail = '0c9bce5f-0d20-46ab-a8a3-5fcf17af84d0'
 
             def dockerImageVersion = '1.0.0'
