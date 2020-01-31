@@ -32,6 +32,7 @@ import com.aceinfo.commonservices.security.api.cognito.services.CognitoService;
 import com.aceinfo.commonservices.security.api.cognito.utilities.AppConstants;
 import com.aceinfo.commonservices.security.api.cognito.utilities.ApplicationUtility;
 import com.amazonaws.auth.AWSCredentialsProvider;
+import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.cognitoidp.AWSCognitoIdentityProvider;
 import com.amazonaws.services.cognitoidp.AWSCognitoIdentityProviderClient;
@@ -73,13 +74,24 @@ public class CognitoController {
 	private String								cognitoPoolId;
 	@Value("${cognito_client_id}")
 	private String								cognitoClientId;
+	@Value("${AWS_ACCESS_KEY_ID}")
+	private String								awsAccessKey;
+	@Value("${AWS_SECRET_ACCESS_KEY}")
+	private String								awsSecretKey;
+	@Value("${AWS_REGION}")
+	private String								awsRegion;
+
 
 	@Autowired
 	private CognitoService				        cognitoService;
+	
+	//BasicAWSCredentials credChain = new BasicAWSCredentials(awsAccessKey, awsSecretKey);
 		
-	@Autowired
-	private AWSCognitoIdentityProvider	cognitoClient;//	= CognitoConfig.identityProviderFactory();
-
+	//@Autowired
+	//private AWSCognitoIdentityProvider	cognitoClientnnnnn = AWSCognitoIdentityProviderClientBuilder.standard()
+	//		 .withCredentials(new AWSStaticCredentialsProvider(credChain))
+	//		 .withRegion(awsRegion)
+	//		 .build();//.defaultClient();
 	
 	
 
@@ -93,7 +105,7 @@ public class CognitoController {
 	public ResponseEntity<Object> authenticateUser(@RequestBody AuthenticationRequest authRequest) {
 		boolean validRequest = ApplicationUtility.validateAuthenticationRequest(authRequest);
 		if (validRequest)
-			return cognitoService.authenticateUser(authRequest, cognitoPoolId, cognitoClientId);
+			return cognitoService.authenticateUser(authRequest, cognitoPoolId, cognitoClientId, awsSecretKey, awsAccessKey, awsRegion);
 		else {
 			return new ResponseEntity<>(AppConstants.APPLICATION_CONSTANTS_ERROR_INVALIDLOGINREQUEST + " UserLogin and Password are needed.", HttpStatus.BAD_REQUEST);
 		}
@@ -122,6 +134,13 @@ public class CognitoController {
 						new AttributeType().withName(AppConstants.ATTRIBUTES_COGNITO_GIVENNAME).withValue(firstname))
 				.withDesiredDeliveryMediums(DeliveryMediumType.EMAIL).withForceAliasCreation(Boolean.FALSE);
 		List<AdminAddUserToGroupRequest>	roleRequests	= new ArrayList<>();
+		
+				BasicAWSCredentials credChain = new BasicAWSCredentials(awsAccessKey, awsSecretKey);
+		
+				AWSCognitoIdentityProvider	cognitoClient	= AWSCognitoIdentityProviderClientBuilder.standard()
+						 .withCredentials(new AWSStaticCredentialsProvider(credChain))
+						 .withRegion(awsRegion)
+						 .build();//.defaultClient();
 		for (int i = 0; i < groups.length(); i++) {
 			String						role	= groups.getString(i);
 			AdminAddUserToGroupRequest	request	= new AdminAddUserToGroupRequest().withUserPoolId(cognitoPoolId).withUsername(userName).withGroupName(role);
@@ -153,6 +172,14 @@ public class CognitoController {
 	
 	@PostMapping(path = AppConstants.ENDPOINT_SIGNUP)
 	public ResponseEntity<Object> signUp( @RequestBody Object o) {
+		
+	BasicAWSCredentials credChain = new BasicAWSCredentials(awsAccessKey, awsSecretKey);
+		
+		AWSCognitoIdentityProvider	loccognitoClient	= AWSCognitoIdentityProviderClientBuilder.standard()
+				 .withCredentials(new AWSStaticCredentialsProvider(credChain))
+				 .withRegion(awsRegion)
+				 .build();//.defaultClient();
+		
 		logger.error("begin adduser method");
 		JSONObject							j				= new JSONObject((Map<?, ?>) o);
 		String								userName		= j.getString(AppConstants.ATTRIBUTES_COGNITO_USERNAME).toLowerCase();
@@ -167,7 +194,7 @@ public class CognitoController {
 						new AttributeType().withName(AppConstants.ATTRIBUTES_COGNITO_GIVENNAME).withValue(firstname)
 						);
 		try {
-			cognitoClient.signUp(cognitoRequest);
+			loccognitoClient.signUp(cognitoRequest);
 		} catch (UsernameExistsException e) {
 			if (e.getMessage().contains(AppConstants.ATTRIBUTES_COGNITO_EMAIL)) {
 				throw new NotImplementedException("TODO: User with this email already exists\nAWS Cognito Error: " + e.getMessage().trim());
@@ -190,7 +217,12 @@ public class CognitoController {
 		ConfirmSignUpRequest cognitoRequest = new ConfirmSignUpRequest().withClientId(cognitoClientId)
 				.withConfirmationCode(confirmationCode)
 				.withUsername(userName);
-
+		BasicAWSCredentials credChain = new BasicAWSCredentials(awsAccessKey, awsSecretKey);
+		
+		AWSCognitoIdentityProvider	cognitoClient	= AWSCognitoIdentityProviderClientBuilder.standard()
+				 .withCredentials(new AWSStaticCredentialsProvider(credChain))
+				 .withRegion(awsRegion)
+				 .build();//.defaultClient();
 		try {
 			cognitoClient.confirmSignUp(cognitoRequest);
 		} catch (UsernameExistsException e) {
@@ -213,6 +245,12 @@ public class CognitoController {
 		JSONObject				j				= new JSONObject((Map<?, ?>) o);
 		String					userName		= j.getString(AppConstants.ATTRIBUTES_COGNITO_USERNAME).toLowerCase();
 		AdminDeleteUserRequest	cognitoRequest	= new AdminDeleteUserRequest().withUserPoolId(cognitoPoolId).withUsername(userName);
+		BasicAWSCredentials credChain = new BasicAWSCredentials(awsAccessKey, awsSecretKey);
+		
+		AWSCognitoIdentityProvider	cognitoClient	= AWSCognitoIdentityProviderClientBuilder.standard()
+				 .withCredentials(new AWSStaticCredentialsProvider(credChain))
+				 .withRegion(awsRegion)
+				 .build();//.defaultClient();
 		try {
 			cognitoClient.adminDeleteUser(cognitoRequest);
 		} catch (Exception e) {
@@ -227,6 +265,12 @@ public class CognitoController {
 		JSONObject				j				= new JSONObject((Map<?, ?>) o);
 		String					userName		= j.getString(AppConstants.ATTRIBUTES_COGNITO_USERNAME).toLowerCase();
 		AdminDisableUserRequest	cognitoRequest	= new AdminDisableUserRequest().withUserPoolId(cognitoPoolId).withUsername(userName);
+		BasicAWSCredentials credChain = new BasicAWSCredentials(awsAccessKey, awsSecretKey);
+		
+		AWSCognitoIdentityProvider	cognitoClient	= AWSCognitoIdentityProviderClientBuilder.standard()
+				 .withCredentials(new AWSStaticCredentialsProvider(credChain))
+				 .withRegion(awsRegion)
+				 .build();//.defaultClient();
 		try {
 			cognitoClient.adminDisableUser(cognitoRequest);
 		} catch (UserNotFoundException e) {
@@ -243,6 +287,12 @@ public class CognitoController {
 		JSONObject				j				= new JSONObject((Map<?, ?>) o);
 		String					userName		= j.getString(AppConstants.ATTRIBUTES_COGNITO_USERNAME).toLowerCase();
 		AdminEnableUserRequest	cognitoRequest	= new AdminEnableUserRequest().withUserPoolId(cognitoPoolId).withUsername(userName);
+		BasicAWSCredentials credChain = new BasicAWSCredentials(awsAccessKey, awsSecretKey);
+		
+		AWSCognitoIdentityProvider	cognitoClient	= AWSCognitoIdentityProviderClientBuilder.standard()
+				 .withCredentials(new AWSStaticCredentialsProvider(credChain))
+				 .withRegion(awsRegion)
+				 .build();//.defaultClient();
 		try {
 			cognitoClient.adminEnableUser(cognitoRequest);
 		} catch (UserNotFoundException e) {
@@ -265,6 +315,12 @@ public class CognitoController {
 		cognitoRequest.withUserPoolId(cognitoPoolId).withUsername(userName).withUserAttributes(new AttributeType().withName("email").withValue(emailAddress),
 				new AttributeType().withName("email_verified").withValue("true"), new AttributeType().withName(AppConstants.ATTRIBUTES_COGNITO_FAMILYNAME).withValue(lastname),
 				new AttributeType().withName(AppConstants.ATTRIBUTES_COGNITO_GIVENNAME).withValue(firstname));
+		BasicAWSCredentials credChain = new BasicAWSCredentials(awsAccessKey, awsSecretKey);
+		
+		AWSCognitoIdentityProvider	cognitoClient	= AWSCognitoIdentityProviderClientBuilder.standard()
+				 .withCredentials(new AWSStaticCredentialsProvider(credChain))
+				 .withRegion(awsRegion)
+				 .build();//.defaultClient();
 		try {
 			cognitoClient.adminUpdateUserAttributes(cognitoRequest);
 		} catch (AliasExistsException e) {
@@ -285,6 +341,12 @@ public class CognitoController {
 		ListGroupsRequest lstGroup = new ListGroupsRequest();
 		lstGroup.withUserPoolId(cognitoPoolId);
 		ListGroupsResult lstRest = null;
+		BasicAWSCredentials credChain = new BasicAWSCredentials(awsAccessKey, awsSecretKey);
+		
+		AWSCognitoIdentityProvider	cognitoClient	= AWSCognitoIdentityProviderClientBuilder.standard()
+				 .withCredentials(new AWSStaticCredentialsProvider(credChain))
+				 .withRegion(awsRegion)
+				 .build();//.defaultClient();
 		try {
 			lstRest = cognitoClient.listGroups(lstGroup);
 		} catch (Exception e) {
@@ -323,6 +385,12 @@ public class CognitoController {
 	public ResponseEntity<Object> resetPasswordConfirm(@PathVariable("username") String username, @PathVariable("confirmationCode") String confirmationCode, @PathVariable("newPassword") String newPassword) {
 		ConfirmForgotPasswordRequest	confPWReq		= new ConfirmForgotPasswordRequest().withUsername(username).withClientId(cognitoClientId)
 				.withConfirmationCode(confirmationCode).withPassword(newPassword);
+		BasicAWSCredentials credChain = new BasicAWSCredentials(awsAccessKey, awsSecretKey);
+		
+		AWSCognitoIdentityProvider	cognitoClient	= AWSCognitoIdentityProviderClientBuilder.standard()
+				 .withCredentials(new AWSStaticCredentialsProvider(credChain))
+				 .withRegion(awsRegion)
+				 .build();//.defaultClient();
 		ConfirmForgotPasswordResult		confPWResult	= cognitoClient.confirmForgotPassword(confPWReq);
 		return new ResponseEntity<>(confPWResult, HttpStatus.OK);
 	}
@@ -334,6 +402,12 @@ public class CognitoController {
 	public ResponseEntity<Object> resetPassword(@PathVariable("username") String username) {
 		ForgotPasswordRequest	fpRequest	= new ForgotPasswordRequest().withUsername(username).withClientId(cognitoClientId);
 		ForgotPasswordResult	fpResult;
+		BasicAWSCredentials credChain = new BasicAWSCredentials(awsAccessKey, awsSecretKey);
+		
+		AWSCognitoIdentityProvider	cognitoClient	= AWSCognitoIdentityProviderClientBuilder.standard()
+				 .withCredentials(new AWSStaticCredentialsProvider(credChain))
+				 .withRegion(awsRegion)
+				 .build();//.defaultClient();
 		try {
 			fpResult = cognitoClient.forgotPassword(fpRequest);
 		} catch (LimitExceededException e) {
@@ -352,6 +426,12 @@ public class CognitoController {
 		groupsReq.withUsername(userName);
 		groupsReq.withUserPoolId(cognitoPoolId);
 		AdminListGroupsForUserResult groupsRes = null;
+		BasicAWSCredentials credChain = new BasicAWSCredentials(awsAccessKey, awsSecretKey);
+		
+		AWSCognitoIdentityProvider	cognitoClient	= AWSCognitoIdentityProviderClientBuilder.standard()
+				 .withCredentials(new AWSStaticCredentialsProvider(credChain))
+				 .withRegion(awsRegion)
+				 .build();//.defaultClient();
 		try {
 			groupsRes = cognitoClient.adminListGroupsForUser(groupsReq);
 		} catch (Exception e) {

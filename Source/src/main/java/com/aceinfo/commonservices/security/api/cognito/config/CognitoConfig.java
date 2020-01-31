@@ -11,7 +11,7 @@ import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.cognitoidp.AWSCognitoIdentityProvider;
 import com.amazonaws.services.cognitoidp.AWSCognitoIdentityProviderClientBuilder;
 
-@Configuration
+//@Configuration
 public class CognitoConfig {
 	private static final Logger logger = LoggerFactory.getLogger(CognitoConfig.class);
 
@@ -23,7 +23,7 @@ public class CognitoConfig {
 	private String								awsRegion;
 
 	
-	
+	/*
 	@Bean
 	public AWSCognitoIdentityProvider identityProviderFactory() {
 				
@@ -36,6 +36,6 @@ public class CognitoConfig {
 		
 		return cognitoClient;
 	}
-
+*/
 	
 }

@@ -23,6 +23,8 @@ import com.aceinfo.commonservices.security.api.cognito.models.AuthenticationRequ
 import com.aceinfo.commonservices.security.api.cognito.models.CognitoUserVO;
 import com.aceinfo.commonservices.security.api.cognito.utilities.AppConstants;
 import com.aceinfo.commonservices.security.api.cognito.utilities.ApplicationUtility;
+import com.amazonaws.auth.AWSStaticCredentialsProvider;
+import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.cognitoidp.AWSCognitoIdentityProvider;
 import com.amazonaws.services.cognitoidp.AWSCognitoIdentityProviderClientBuilder;
 import com.amazonaws.services.cognitoidp.model.AdminAddUserToGroupRequest;
@@ -88,7 +90,14 @@ public class CognitoServiceImpl implements CognitoService {
 		return new ResponseEntity<>(responseJSON.toString(), responseStatus);
 	}
 
-	public ResponseEntity<Object> authenticateUser(AuthenticationRequest userAuthRequest, String cognitoPoolId, String cognitoClientId) {
+	public ResponseEntity<Object> authenticateUser(AuthenticationRequest userAuthRequest, String cognitoPoolId, String cognitoClientId, String secret, String access, String reg) {
+		
+		BasicAWSCredentials credChain = new BasicAWSCredentials(access, secret);
+		
+		AWSCognitoIdentityProvider	loccognitoClient	= AWSCognitoIdentityProviderClientBuilder.standard()
+				 .withCredentials(new AWSStaticCredentialsProvider(credChain))
+				 .withRegion(reg)
+				 .build();//.defaultClient();
 		JSONObject	out				= new JSONObject();
 		HttpStatus	status			= HttpStatus.NOT_IMPLEMENTED;
 		HttpHeaders	responseHeaders	= new HttpHeaders();
@@ -100,7 +109,7 @@ public class CognitoServiceImpl implements CognitoService {
 		AdminInitiateAuthResult authenticationResult = new AdminInitiateAuthResult();
 		try {
 			AdminInitiateAuthRequest initiateAuthRequest = new AdminInitiateAuthRequest().withAuthFlow(AuthFlowType.ADMIN_NO_SRP_AUTH).withAuthParameters(authParams).withClientId(cognitoClientId).withUserPoolId(cognitoPoolId);
-			authenticationResult = cognitoClient.adminInitiateAuth(initiateAuthRequest);
+			authenticationResult = loccognitoClient.adminInitiateAuth(initiateAuthRequest);
 			userAuthRequest.setCognitoSession(authenticationResult.getSession());
 		} catch (NotAuthorizedException notAuthorizedException) {
 			exceptionOccured = true;
