@@ -21,9 +21,9 @@ import com.amazonaws.services.cognitoidp.AWSCognitoIdentityProviderClientBuilder
 public class CognitoConfig {
 	private static final Logger logger = LoggerFactory.getLogger(CognitoConfig.class);
 
-	@Value("${AWS_ACCESS_KEY}")
+	@Value("${AWS_ACCESS_KEY_ID}")
 	private String								awsAccessKey;
-	@Value("${AWS_SECRET_KEY}")
+	@Value("${AWS_SECRET_ACCESS_KEY}")
 	private String								awsSecretKey;
 	@Value("${aws_region}")
 	private String								awsRegion;
