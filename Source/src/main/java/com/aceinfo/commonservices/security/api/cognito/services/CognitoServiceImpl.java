@@ -11,6 +11,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -52,7 +53,9 @@ import com.amazonaws.util.StringUtils;
 public class CognitoServiceImpl implements CognitoService {
 	private final Logger						logger			= LoggerFactory.getLogger(this.getClass());
 	private CognitoHelper						cognitoHelper	= new CognitoHelper();
-	private static AWSCognitoIdentityProvider	cognitoClient	= AWSCognitoIdentityProviderClientBuilder.defaultClient();
+	
+	@Autowired
+	private static AWSCognitoIdentityProvider	cognitoClient;//	= AWSCognitoIdentityProviderClientBuilder.defaultClient();
 
 	public ResponseEntity<Object> validateUserSession(AuthenticationRequest userAuthRequest, String cognitoPoolId, String cognitoClientId) {
 		JSONObject		responseJSON	= new JSONObject();

@@ -73,7 +73,7 @@ public class CognitoController {
 	private String								cognitoPoolId;
 	@Value("${cognito_client_id}")
 	private String								cognitoClientId;
-	
+
 	@Autowired
 	private CognitoService				        cognitoService;
 		
