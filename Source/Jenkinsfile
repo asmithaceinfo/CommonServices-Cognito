@@ -198,7 +198,7 @@ node('master') {
                             ${oc} process -f ${testTemplateName} | ${oc} apply -f - -n ${testProjectName}
                             ${oc} tag --source=docker ${nexusRegistryURL}/${nexusRepoUser}/${projectTagName}:${dockerImageVersion} ${testProjectName}/${projectTagName}-is:${dockerImageVersion} --insecure
                             sleep 5
-                            ${oc} import-image ${projectTagName}-is:${dockerImageVersion} --confirm --insecure | grep -i "successfully"
+                            ${oc} import-image ${projectTagName}-is:${dockerImageVersion} --confirm --insecure | grep -i "imported"
                             sleep 45
                         """
                     }
