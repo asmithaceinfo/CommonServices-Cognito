@@ -24,11 +24,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.aceinfo.commonservices.security.api.cognito.config.CognitoConfig;
 import com.aceinfo.commonservices.security.api.cognito.config.SecurityConfig;
 import com.aceinfo.commonservices.security.api.cognito.models.AuthenticationRequest;
+import com.aceinfo.commonservices.security.api.cognito.models.SignupRequest;
 import com.aceinfo.commonservices.security.api.cognito.services.CognitoService;
 import com.aceinfo.commonservices.security.api.cognito.utilities.AppConstants;
 import com.aceinfo.commonservices.security.api.cognito.utilities.ApplicationUtility;
+import com.amazonaws.auth.AWSCredentialsProvider;
+import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.cognitoidp.AWSCognitoIdentityProvider;
 import com.amazonaws.services.cognitoidp.AWSCognitoIdentityProviderClient;
 import com.amazonaws.services.cognitoidp.AWSCognitoIdentityProviderClientBuilder;
@@ -69,18 +73,13 @@ public class CognitoController {
 	private String								cognitoPoolId;
 	@Value("${cognito_client_id}")
 	private String								cognitoClientId;
-	/*@Autowired
-	private final CognitoService				cognitoService;*/
+	
 	@Autowired
 	private CognitoService				        cognitoService;
-	private static AWSCognitoIdentityProvider	cognitoClient	= AWSCognitoIdentityProviderClientBuilder.defaultClient();
-	//private AWSCredentialsProvider credProvider
-	//private static AWSCognitoIdentityProvider cognitoCli = AWSCognitoIdentityProviderClientBuilder.standard().withCredentials(credentialsProvider)
-    
-	/*@Autowired
-	public CognitoController(CognitoService cognitoService) {
-		this.cognitoService = cognitoService;
-	}*/
+		
+	@Autowired
+	private AWSCognitoIdentityProvider	cognitoClient;//	= CognitoConfig.identityProviderFactory();
+
 	
 	
 
@@ -178,8 +177,8 @@ public class CognitoController {
 		} catch (Exception e) {
 			throw new NotImplementedException("Other Error on CreateUser \nAWS Cognito Error: " + e.getMessage().trim());
 		}
-		ResponseEntity<Object> lstResult = getUsers();
-		return new ResponseEntity<>(lstResult.getBody(), HttpStatus.OK);
+		//ResponseEntity<Object> lstResult = getUsers();
+		return new ResponseEntity<>("OK", HttpStatus.OK);
 	}
 	
 	@PostMapping(path = AppConstants.ENDPOINT_CONFIRM_SIGNUP)
@@ -204,8 +203,8 @@ public class CognitoController {
 			throw new NotImplementedException("Other Error on CreateUser \nAWS Cognito Error: " + e.getMessage().trim());
 		}
 
-		ResponseEntity<Object> lstResult = getUsers();
-		return new ResponseEntity<>(lstResult.getBody(), HttpStatus.OK);
+		//ResponseEntity<Object> lstResult = getUsers();
+		return new ResponseEntity<>("OK", HttpStatus.OK);
 	}
 
 	@DeleteMapping(path = AppConstants.ENDPOINT_DELETEUSER)
