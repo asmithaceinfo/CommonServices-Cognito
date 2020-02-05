@@ -24,6 +24,7 @@ public class AppConstants {
 	public static final String ENDPOINT_HEALTHCHECK = "/healthcheck";
 	
 	public static final String ENDPOINT_GETUSERS_ALL = "/getUsers";
+	public static final String ENDPOINT_VALIDEMAIL = "/validEmail";
 	
 	public static final String ENDPOINT_UPDATEUSERGROUPS = "/updateUserGroups";
 	

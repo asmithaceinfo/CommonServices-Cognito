@@ -266,17 +266,57 @@ public class CognitoServiceImpl implements CognitoService {
 		} catch (Exception e) {
 			throw new NotImplementedException("TODO: Other Error on AddUserToGroup \nAWS Cognito Error: " + e.getMessage().trim());
 		}
-		ResponseEntity<Object> lstResult = getUsers(cognitoPoolId);
-		return new ResponseEntity<>(lstResult.getBody(), HttpStatus.OK);
+		//ResponseEntity<Object> lstResult = getUsers(cognitoPoolId);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
-	
+	public Boolean validEmail(String cognitoPoolId, String a, String b, String c, String email) {
+		
+		BasicAWSCredentials credChain = new BasicAWSCredentials(a, b);
+			
+			AWSCognitoIdentityProvider	loccognitoClient	= AWSCognitoIdentityProviderClientBuilder.standard()
+					 .withCredentials(new AWSStaticCredentialsProvider(credChain))
+					 .withRegion(c)
+					 .build();//.defaultClient();
+			
+			ListUsersRequest lstUserReq = new ListUsersRequest();
+			lstUserReq.withUserPoolId(cognitoPoolId);
+			lstUserReq.withFilter("email = \""+email+"\"");
+					//\"andrew.smith@live.longwood.edu\"");
+			ListUsersResult lstResult;
+			try {
+				lstResult = loccognitoClient.listUsers(lstUserReq);
 
-	public ResponseEntity<Object> getUsers(String cognitoPoolId) {
+
+			} catch (Exception e) {
+				JSONObject out = new JSONObject();
+				logger.debug("Failed to Get List of Users from Cognito");
+				try {
+					out.put(AppConstants.APPLICATION_CONSTANTS_ERRORMESSAGETITLE_XXX, AppConstants.ENDPOINT_GETUSERS_ALL + " Failed: " + e.getMessage().trim());
+				} catch (JSONException e1) {
+					logger.error(AppConstants.ENDPOINT_GETUSERS_ALL, e);
+				}
+				//return new ResponseEntity<>(e.getMessage().trim(), HttpStatus.UNAUTHORIZED);
+				return false;
+			}
+			//return new ResponseEntity<>(lstResult.getUsers().size(), HttpStatus.OK);
+			logger.error("SIZE OF USERS:"+lstResult.getUsers().size());
+			return lstResult.getUsers().size() == 0;
+		}
+
+	public ResponseEntity<Object> getUsers(String cognitoPoolId, String a, String b, String c) {
+		
+	BasicAWSCredentials credChain = new BasicAWSCredentials(a, b);
+		
+		AWSCognitoIdentityProvider	loccognitoClient	= AWSCognitoIdentityProviderClientBuilder.standard()
+				 .withCredentials(new AWSStaticCredentialsProvider(credChain))
+				 .withRegion(c)
+				 .build();//.defaultClient();
 		ListUsersRequest lstUserReq = new ListUsersRequest();
 		lstUserReq.withUserPoolId(cognitoPoolId);
+		//lstUserReq.withFilter("email = \"andrew.smith@live.longwood.edu\"");
 		ListUsersResult lstResult;
 		try {
-			lstResult = cognitoClient.listUsers(lstUserReq);
+			lstResult = loccognitoClient.listUsers(lstUserReq);
 		} catch (Exception e) {
 			JSONObject out = new JSONObject();
 			logger.debug("Failed to Get List of Users from Cognito");

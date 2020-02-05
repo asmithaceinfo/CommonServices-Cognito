@@ -58,6 +58,8 @@ import com.amazonaws.services.cognitoidp.model.GroupType;
 import com.amazonaws.services.cognitoidp.model.LimitExceededException;
 import com.amazonaws.services.cognitoidp.model.ListGroupsRequest;
 import com.amazonaws.services.cognitoidp.model.ListGroupsResult;
+import com.amazonaws.services.cognitoidp.model.ListUsersRequest;
+import com.amazonaws.services.cognitoidp.model.ListUsersResult;
 import com.amazonaws.services.cognitoidp.model.SignUpRequest;
 import com.amazonaws.services.cognitoidp.model.UserNotFoundException;
 import com.amazonaws.services.cognitoidp.model.UsernameExistsException;
@@ -166,7 +168,7 @@ public class CognitoController {
 		} catch (Exception e) {
 			throw new NotImplementedException("Other Error on AddUserToGroup \nAWS Cognito Error: " + e.getMessage().trim());
 		}
-		ResponseEntity<Object> lstResult = getUsers();
+		//ResponseEntity<Object> lstResult = getUsers();
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
@@ -180,7 +182,7 @@ public class CognitoController {
 				 .withRegion(awsRegion)
 				 .build();//.defaultClient();
 		
-		logger.error("begin adduser method");
+		logger.error("begin signUp method");
 		JSONObject							j				= new JSONObject((Map<?, ?>) o);
 		String								userName		= j.getString(AppConstants.ATTRIBUTES_COGNITO_USERNAME).toLowerCase();
 		String								emailAddress	= j.getString(AppConstants.ATTRIBUTES_COGNITO_EMAIL).toLowerCase();
@@ -193,19 +195,35 @@ public class CognitoController {
 						new AttributeType().withName(AppConstants.ATTRIBUTES_COGNITO_FAMILYNAME).withValue(lastname),
 						new AttributeType().withName(AppConstants.ATTRIBUTES_COGNITO_GIVENNAME).withValue(firstname)
 						);
+		Boolean emailValid;
 		try {
-			loccognitoClient.signUp(cognitoRequest);
-		} catch (UsernameExistsException e) {
-			if (e.getMessage().contains(AppConstants.ATTRIBUTES_COGNITO_EMAIL)) {
-				throw new NotImplementedException("TODO: User with this email already exists\nAWS Cognito Error: " + e.getMessage().trim());
-			} else {
-				throw new NotImplementedException("TODO: Username exists " + e.getMessage().trim());
-			}
+			emailValid = validEmail(awsAccessKey, awsSecretKey, awsRegion, emailAddress);
 		} catch (Exception e) {
-			throw new NotImplementedException("Other Error on CreateUser \nAWS Cognito Error: " + e.getMessage().trim());
+			throw new NotImplementedException("Error checking if email is valid.\nAWS Cognito Error: ");
 		}
-		//ResponseEntity<Object> lstResult = getUsers();
-		return new ResponseEntity<>(HttpStatus.OK);
+		
+		
+		if (emailValid) {
+			
+			try {
+				loccognitoClient.signUp(cognitoRequest);
+			} catch (UsernameExistsException e) {
+				if (e.getMessage().contains(AppConstants.ATTRIBUTES_COGNITO_EMAIL)) {
+					throw new NotImplementedException("TODO: User with this email already exists\nAWS Cognito Error: " + e.getMessage().trim());
+				} else {
+					throw new NotImplementedException("TODO: Username exists " + e.getMessage().trim());
+				}
+			} catch (Exception e) {
+				throw new NotImplementedException("Other Error on CreateUser \nAWS Cognito Error: " + e.getMessage().trim());
+			}
+			
+			return new ResponseEntity<>(HttpStatus.OK);
+		} else {
+			throw new NotImplementedException("TODO: User with this email already exists\nAWS Cognito Error: ");
+		}
+
+		//ResponseEntity<Object> lstResult = validEmail(awsAccessKey, awsSecretKey, awsRegion, emailAddress);
+		//return new ResponseEntity<>(lstResult.getBody(), HttpStatus.OK);
 	}
 	
 	@PostMapping(path = AppConstants.ENDPOINT_CONFIRM_SIGNUP)
@@ -357,12 +375,19 @@ public class CognitoController {
 
 	/**
 	 * getUsers from aws cognito pool
+	 * @param r 
+	 * @param b 
+	 * @param a 
 	 * 
 	 * @return
 	 */
 	@GetMapping(path = AppConstants.ENDPOINT_GETUSERS_ALL)
-	public ResponseEntity<Object> getUsers() {
-		return cognitoService.getUsers(cognitoPoolId);
+	public ResponseEntity<Object> getUsers(String a, String b, String r) {
+		return cognitoService.getUsers(cognitoPoolId, a, b, r);
+	}
+	@GetMapping(path = AppConstants.ENDPOINT_VALIDEMAIL)
+	public Boolean validEmail(String a, String b, String r, String e) {
+		return cognitoService.validEmail(cognitoPoolId, a, b, r, e);
 	}
 
 	/**
