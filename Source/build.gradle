@@ -1,16 +1,17 @@
 buildscript {
 	ext {
-		springBootVersion = '2.1.4.RELEASE'
+		springBootVersion = '2.2.4.RELEASE'
 	}
 	repositories {
 		mavenCentral()
 	}
 	dependencies {
-		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
 		classpath("se.transmode.gradle:gradle-docker:1.2")
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
 		classpath("org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.6.1")
 	}
 }
+
 
 apply plugin: 'java'
 apply plugin: 'eclipse'
@@ -45,8 +46,8 @@ dependencies {
 
 
    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-oauth2-client
-	compile group: 'org.springframework.boot', name: 'spring-boot-starter-oauth2-client', version: '2.1.0.RELEASE'
-	compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-rest', version: '2.1.4.RELEASE'
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-oauth2-client', version: '2.2.4.RELEASE'
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-rest', version: '2.2.4.RELEASE'
 
 	compile group: 'com.amazonaws', name: 'aws-java-sdk-cognitoidp', version: '1.11.653'
 	compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.8.1'
@@ -59,7 +60,7 @@ dependencies {
 	compile group: 'com.jayway.jsonpath', name: 'json-path', version: '2.4.0'	
 	compile group: 'com.auth0', name: 'java-jwt', version: '3.8.0'
 	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.2.0.RELEASE'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.2.4.RELEASE'
     // https://mvnrepository.com/artifact/com.nimbusds/nimbus-jose-jwt
 	compile group: 'com.nimbusds', name: 'nimbus-jose-jwt', version: '8.2'
     
