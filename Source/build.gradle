@@ -6,8 +6,8 @@ buildscript {
 		mavenCentral()
 	}
 	dependencies {
-		classpath("se.transmode.gradle:gradle-docker:1.2")
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+		classpath("se.transmode.gradle:gradle-docker:1.2")
 		classpath("org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.6.1")
 	}
 }
@@ -45,7 +45,7 @@ repositories {
 dependencies {
 
 
-   // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-oauth2-client
+	implementation 'org.springframework.boot:spring-boot-starter'
 	compile group: 'org.springframework.boot', name: 'spring-boot-starter-oauth2-client', version: '2.2.4.RELEASE'
 	compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-rest', version: '2.2.4.RELEASE'
 
@@ -78,20 +78,17 @@ dependencies {
 	// https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-jackson
 	runtime group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.10.7'
 		
-	testCompile group: 'junit', name: 'junit', version: '4.12'
+	testCompile group: 'junit', name: 'junit', version: '4.13'
 
 	testCompile group: 'org.mockito', name: 'mockito-core', version: '2.28.2'
-	testCompile group: 'org.assertj', name: 'assertj-core', version: '3.12.2'
 	testCompile group: 'org.springframework', name: 'spring-test', version: '5.1.7.RELEASE'
 	testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '2.2.4.RELEASE'
-	// https://mvnrepository.com/artifact/junit/junit
-	testCompile group: 'junit', name: 'junit', version: '4.12'
 
 	compileOnly('org.projectlombok:lombok')
 	testCompile group: 'com.jayway.jsonpath', name: 'json-path-assert', version: '2.4.0'
 
 	testCompile("junit:junit")
-	testCompile group: 'org.assertj', name: 'assertj-core', version: '3.11.1'
+	testCompile group: 'org.assertj', name: 'assertj-core', version: '3.12.2'
 }
 
 apply plugin: 'docker'
