@@ -90,7 +90,7 @@ node('master') {
 						export AWS_ACCESS_KEY_ID=mock
 						export AWS_SECRET_ACCESS_KEY=mock
 						export AWS_REGION=mock						
-                        ./gradlew test
+                        ./gradlew test --stacktrace
                     """
                 }
             }
