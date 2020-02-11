@@ -107,8 +107,9 @@ node('master') {
                 dir("${env.WORKSPACE}${filepath}") {
                     sh """
                         ./gradlew jacocoTestCoverageVerification jacocoTestReport 
-						jacoco buildOverBuild: true
+						
                     """
+					jacoco buildOverBuild: false
                 }
             }
 
