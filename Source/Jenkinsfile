@@ -109,7 +109,7 @@ node('master') {
                         ./gradlew jacocoTestCoverageVerification jacocoTestReport 
 						
                     """
-					jacoco buildOverBuild: false
+					jacoco buildOverBuild: true, changeBuildStatus: true
                 }
             }
 
