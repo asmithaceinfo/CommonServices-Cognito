@@ -1,6 +1,6 @@
 buildscript {
 	ext {
-		springBootVersion = '2.2.4.RELEASE'
+		springBootVersion = '2.1.12.RELEASE'
 	}
 	repositories {
 		mavenCentral()
@@ -11,7 +11,6 @@ buildscript {
 		classpath("org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.6.1")
 	}
 }
-
 
 apply plugin: 'java'
 apply plugin: 'eclipse'
@@ -45,11 +44,10 @@ repositories {
 dependencies {
 
 
-	implementation 'org.springframework.boot:spring-boot-starter'
-	compile group: 'org.springframework.boot', name: 'spring-boot-starter-oauth2-client', version: '2.1.0.RELEASE'
-	compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-rest', version: '2.2.4.RELEASE'
+   // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-oauth2-client
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-oauth2-client', version: '2.1.12.RELEASE'
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-rest', version: '2.1.12.RELEASE'
 
-	// https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk-cognitoidp
 	compile group: 'com.amazonaws', name: 'aws-java-sdk-cognitoidp', version: '1.11.653'
 	compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.8.1'
 
@@ -61,7 +59,7 @@ dependencies {
 	compile group: 'com.jayway.jsonpath', name: 'json-path', version: '2.4.0'	
 	compile group: 'com.auth0', name: 'java-jwt', version: '3.8.0'
 	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.2.4.RELEASE'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.2.0.RELEASE'
     // https://mvnrepository.com/artifact/com.nimbusds/nimbus-jose-jwt
 	compile group: 'com.nimbusds', name: 'nimbus-jose-jwt', version: '8.2'
     
@@ -78,11 +76,14 @@ dependencies {
 	// https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-jackson
 	runtime group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.10.7'
 		
-	testCompile group: 'junit', name: 'junit', version: '4.13'
+	testCompile group: 'junit', name: 'junit', version: '4.12'
 
 	testCompile group: 'org.mockito', name: 'mockito-core', version: '2.28.2'
+	testCompile group: 'org.assertj', name: 'assertj-core', version: '3.12.2'
 	testCompile group: 'org.springframework', name: 'spring-test', version: '5.1.7.RELEASE'
-	testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '2.2.4.RELEASE'
+	testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '2.1.5.RELEASE'
+	// https://mvnrepository.com/artifact/junit/junit
+	testCompile group: 'junit', name: 'junit', version: '4.12'
 
 	compileOnly('org.projectlombok:lombok')
 	testCompile group: 'com.jayway.jsonpath', name: 'json-path-assert', version: '2.4.0'
@@ -158,6 +159,3 @@ jacocoTestCoverageVerification {
 
 check.dependsOn jacocoTestCoverageVerification
 test.finalizedBy jacocoTestReport
-
-
-
