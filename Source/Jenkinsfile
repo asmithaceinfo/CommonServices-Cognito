@@ -105,6 +105,7 @@ node('master') {
 
             stage('Code Coverage (JaCoCo)') {
                 dir("${env.WORKSPACE}${filepath}") {
+					
                     sh """
                         ./gradlew jacocoTestCoverageVerification jacocoTestReport 
 						
