@@ -35,26 +35,26 @@ node('master') {
             def testProjectDisplayName = "bdso-test"
             def testTemplateName = "${artifactFilePath}templates/openshift/testing-template.yaml"
 
-			def stageProjectName = "bdso-stag"
-			def stageConfigMapKeyValues = "bdsoCognitoConfigMap"
-			def stageProjectDisplayName = "bdso-stag"
-			def stageTemplateName = "${artifactFilePath}templates/openshift/staging-template.yaml"
+	    def stageProjectName = "bdso-stag"
+	    def stageConfigMapKeyValues = "bdsoCognitoConfigMap"
+	    def stageProjectDisplayName = "bdso-stag"
+	    def stageTemplateName = "${artifactFilePath}templates/openshift/staging-template.yaml"
 
-			def prodProjectName = "bdso-prod"
-			def prodConfigMapKeyValues = "bdsoCognitoConfigMap"
-			def prodProjectDisplayName = "bdso-prod"
-			def prodTemplateName = "${artifactFilePath}templates/openshift/production-template.yaml"
+	    def prodProjectName = "bdso-prod"
+	    def prodConfigMapKeyValues = "bdsoCognitoConfigMap"
+	    def prodProjectDisplayName = "bdso-prod"
+	    def prodTemplateName = "${artifactFilePath}templates/openshift/production-template.yaml"
 
 
             def route = '/healthcheck'
             def osurl = ""  
 
-			def green = "a"
-  			def blue = "b"
-  			def userInput
-  			def blueWeight
-  			def greenWeight
-  			def canaryDeployment = false
+	    def green = "a"
+            def blue = "b"
+  	    def userInput
+  	    def blueWeight
+  	    def greenWeight
+  	    def canaryDeployment = false
             
             stage ('Prepare Workspace') {
                 notifyStarted()
@@ -176,7 +176,7 @@ node('master') {
                     string(credentialsId: testConfigMapKeyValues, variable: 'TEST_CONFIG')
                     ]) {
                         sh """
-                            ${oc} login --server=${openShiftHost} --token=${OSTOKEN}
+                            ${oc} login --server=${openShiftHost} --token=${OSTOKEN} --insecure-skip-tls-verify
                         """
                         try {
                             sh """
