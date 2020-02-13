@@ -106,8 +106,10 @@ node('master') {
             stage('Code Coverage (JaCoCo)') {
                 dir("${env.WORKSPACE}${filepath}") {
                     sh """
-                        ./gradlew jacocoTestCoverageVerification jacocoTestReport
+                        ./gradlew jacocoTestCoverageVerification jacocoTestReport 
+						
                     """
+					jacoco buildOverBuild: true, changeBuildStatus: true
                 }
             }
 
@@ -150,7 +152,7 @@ node('master') {
                 ]) {
                     dir("${env.WORKSPACE}${filepath}") {
                         sh """ echo "${nexusRegistryURL}/${env.NEXUS_USERNAME}/${projectTagName}:${dockerImageVersion} ./src/main/docker/Dockerfile" > imageFileList """
-                        anchore bailOnFail: false, bailOnPluginFail: false, engineCredentialsId: 'AnchoreEngineCredentials', engineurl: """${anchoreEngineURL}""", name: 'imageFileList'            
+                        anchore bailOnFail: true, bailOnPluginFail: true, engineCredentialsId: 'AnchoreEngineCredentials', engineurl: """${anchoreEngineURL}""", name: 'imageFileList'            
                     }
                 }
             }
@@ -206,13 +208,13 @@ node('master') {
             
             stage('Health Check') {
                 def retstat = 1
-                timeout (time: 5, unit: 'MINUTES') {
+                timeout (time: 15, unit: 'MINUTES') {
                   for (;retstat != 0;) {
                     retstat = sh(
                     script: """
                     curl -I -k "https://`${oc} get route ${projectTagName} -n ${testProjectName} -o jsonpath='{ .spec.host }'`${route}" | grep "HTTP/1.1 20*" """, returnStatus: true)
                     if (retstat != 0) {
-                      sleep 10
+                      sleep 30
                     }
                   }
                 }
