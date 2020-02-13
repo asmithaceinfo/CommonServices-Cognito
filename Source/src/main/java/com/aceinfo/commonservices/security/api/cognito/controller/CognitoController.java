@@ -209,17 +209,17 @@ public class CognitoController {
 				loccognitoClient.signUp(cognitoRequest);
 			} catch (UsernameExistsException e) {
 				if (e.getMessage().contains(AppConstants.ATTRIBUTES_COGNITO_EMAIL)) {
-					throw new NotImplementedException("TODO: User with this email already exists\nAWS Cognito Error: " + e.getMessage().trim());
+					throw new NotImplementedException("User with this email already exists");// + e.getMessage().trim());
 				} else {
-					throw new NotImplementedException("TODO: Username exists " + e.getMessage().trim());
+					throw new NotImplementedException("Username already exists");//) + e.getMessage().trim());
 				}
 			} catch (Exception e) {
-				throw new NotImplementedException("Other Error on CreateUser \nAWS Cognito Error: " + e.getMessage().trim());
+				throw new NotImplementedException("Error on Signup");// \nAWS Cognito Error: " + e.getMessage().trim());
 			}
 			
 			return new ResponseEntity<>(HttpStatus.OK);
 		} else {
-			throw new NotImplementedException("TODO: User with this email already exists\nAWS Cognito Error: ");
+			throw new NotImplementedException("User with this email already exists");
 		}
 
 		//ResponseEntity<Object> lstResult = validEmail(awsAccessKey, awsSecretKey, awsRegion, emailAddress);
