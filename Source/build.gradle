@@ -137,6 +137,7 @@ jacocoTestCoverageVerification {
   violationRules {
     rule {
       element = 'CLASS'
+	  failOnViolation = false
       includes = [
           'com.aceinfo.commonservices.security.api.cognito.controller.*'
       ]
