@@ -409,9 +409,10 @@ node('master') {
             stage ('API LifeCycle Mgmt (APIGEE)') {
             	def httpStatus = 1;
             	withCredentials([
-                    [string(credentialsId: openShiftCredential, variable: 'OSTOKEN'),
                     [$class: 'UsernamePasswordMultiBinding', credentialsId: nexusCredentialId, usernameVariable: 'NEXUS_USERNAME', passwordVariable: 'NEXUS_PASSWORD'],
-            		[$class: 'StringBinding', credentialsId: apigeeAuthCredentials, variable: 'APIGEECREDS']]) {        		
+					 string(credentialsId: openShiftCredential, variable: 'OSTOKEN'),
+            		[$class: 'StringBinding', credentialsId: apigeeAuthCredentials, variable: 'APIGEECREDS']
+					]) {        		
                  	dir("${env.WORKSPACE}${filepath}") {
                  		sh """
                             ${oc} login --server=${openShiftHost} --token=${OSTOKEN}
