@@ -27,7 +27,7 @@ objects:
       name: "a-bdso-cognito-opr-svc"
       weight: "50"
     alternateBackends:
-    - kind: Service
+      kind: Service
       name: "b-bdso-cognito-opr-svc"
       weight: "50"
 

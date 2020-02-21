@@ -259,7 +259,7 @@ node('master') {
 	            }
             }   */                            
 
-         	stage ('Zero Downtime Deployment (ZDD)') {
+         	/* stage ('Zero Downtime Deployment (ZDD)') {
                 withCredentials([
                      [$class: 'UsernamePasswordMultiBinding', credentialsId: nexusCredentialId, usernameVariable: 'NEXUS_USERNAME', passwordVariable: 'NEXUS_PASSWORD'],
                     string(credentialsId: openShiftCredential, variable: 'OSTOKEN'),
@@ -406,7 +406,7 @@ node('master') {
 				}
       		}
       		
-            /* stage ('API LifeCycle Mgmt (APIGEE)') {
+             stage ('API LifeCycle Mgmt (APIGEE)') {
             	def httpStatus = 1;
             	withCredentials([
                     [$class: 'UsernamePasswordMultiBinding', credentialsId: nexusCredentialId, usernameVariable: 'NEXUS_USERNAME', passwordVariable: 'NEXUS_PASSWORD'],
@@ -443,7 +443,7 @@ node('master') {
 	                    perfReport 'build/reports/jmeter/jmeterapitest.xml'
 	                }
 	            }
-            } */                              
+            } */                               
 
         }
         notifySuccessful()
