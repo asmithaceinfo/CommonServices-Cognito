@@ -1,200 +1,71 @@
 kind: Template
 apiVersion: v1
 labels:
-  template: bdso-cognito-production-deployment
-  group: bdso-cognito-production-deployment
+  template: bdso-testing-deployment
+  group: bdso-testing-deployment
   application: bdso-cognito
-  environment: production
+  environment: testing
 metadata:
-  annotations:
-    description: BDSO Cognito API Production A/B Deployments
-    tags: bdso-cognito-production-deployment
-  name: bdso-cognito-production-deployment
-message: BDSO Cognito API Production Deployment Template
+  name: bdso-testing-deployment
+message: BDSO Testing Deployment
 
 objects:
-#Application Route
-- apiVersion: v1
-  kind: Route
-  metadata:
-    name: "bdso-cognito"
-  spec:
-    tls:
-      termination: edge
-      insecureEdgeTerminationPolicy: Redirect  
-    to:
-      kind: Service
-      name: "a-bdso-cognito-opr-svc"
-      weight: "50"
-    alternateBackends:
-    - kind: Service
-      name: "b-bdso-cognito-opr-svc"
-      weight: "50"
-
-#Application A Deployment
-- kind: DeploymentConfig
-  apiVersion: v1
-  metadata:
-    name: "a-bdso-cognito-opr-dc"
-  spec:
-    replicas: 1
-    selector:
-      name: "a-bdso-cognito-opr-dc"
-    strategy:
-      type: Rolling
-    template:
-      metadata:
-        labels:
-          name: "a-bdso-cognito-opr-dc"
-      spec:
-        containers:
-        - name: "a-bdso-cognito"
-          image: "a-bdso-cognito-is"
-          env:
-          - name: AWS_ACCESS_KEY_ID
-            valueFrom:
-                configMapKeyRef:
-                  name: bdso-cognito-config-map 
-                  key: AWS_ACCESS_KEY_ID 
-          - name: AWS_DEFAULT_REGION
-            valueFrom:
-              configMapKeyRef:
-                name: bdso-cognito-config-map 
-                key: AWS_DEFAULT_REGION 
-          - name: AWS_SECRET_ACCESS_KEY
-            valueFrom:
-              configMapKeyRef:
-                name: bdso-cognito-config-map 
-                key: AWS_SECRET_ACCESS_KEY 
-          - name: CORS_FILTER
-            valueFrom:
-              configMapKeyRef:
-                name: bdso-cognito-config-map 
-                key: CORS_FILTER           
-          - name: COGNITO_CLIENT_ID
-            valueFrom:
-              configMapKeyRef:
-                name: bdso-cognito-config-map 
-                key: COGNITO_CLIENT_ID           
-          - name: COGNITO_POOL_ID
-            valueFrom:
-              configMapKeyRef:
-                name: bdso-cognito-config-map 
-                key: COGNITO_POOL_ID           
-          ports:
-          - containerPort: 9000
-          imagePullPolicy: Always
-          livenessProbe:
-            httpGet:
-              path: /healthcheck
-              port: 9000
-            initialDelaySeconds: 30
-            timeoutSeconds: 30
-            periodSeconds: 10
-            successThreshold: 1
-            failureThreshold: 10
-          readinessProbe:
-            httpGet:
-              path: /healthcheck
-              port: 9000
-            initialDelaySeconds: 30
-            timeoutSeconds: 30
-            periodSeconds: 10
-            successThreshold: 1
-            failureThreshold: 10
-          resources:
-            requests:
-              memory: 1024Mi
-              cpu: 500m
-            limits:
-              memory: 2048Mi
-              cpu: 500m
-    triggers:
-    - type: ConfigChange
-    - type: ImageChange
-      imageChangeParams:
-        automatic: true
-        containerNames:
-        - "a-bdso-cognito"
-        from:
-          kind: ImageStream
-          name: "a-bdso-cognito-is:1.0.0"
-
-- kind: HorizontalPodAutoscaler
-  apiVersion: autoscaling/v1
-  metadata:
-    name: a-bdso-cognito-opr-hpa
-  spec:
-    scaleTargetRef:
-      kind: DeploymentConfig
-      name: a-bdso-cognito-opr-dc
-    minReplicas: 1
-    maxReplicas: 5
-    targetCPUUtilizationPercentage: 70
-#Application Service    
+#APPLICATION
 - kind: Service
   apiVersion: v1
   metadata:
-    name: "a-bdso-cognito-opr-svc"
+    name: "bdso-cognito-tst-svc"
   spec:
     ports:
-    - name: bdso-cognito
+    - name: "bdso-cognito-tst-svc"
       port: 9000
       targetPort: 9000
     selector:
-      name: "a-bdso-cognito-opr-dc"
-#Route
+      name: "bdso-cognito-tst-dc"
+    sessionAffinity: None
+
+#Application Route
 - kind: Route
   apiVersion: v1
   metadata:
-    name: "a-bdso-cognito"
+    name: bdso-cognito
   spec:
     tls:
       termination: edge
       insecureEdgeTerminationPolicy: Redirect
     to:
       kind: Service
-      name: "a-bdso-cognito-opr-svc"
+      name: "bdso-cognito-tst-svc"
 
+# Application ImageStream
 - kind: ImageStream
   apiVersion: v1
   metadata:
-    name: "a-bdso-cognito-is"
+    name: "bdso-cognito-is"
   spec:
     dockerImageRepository: "aceinfocoe"
     importPolicy:
       insecure: true
     name: 1.0.0
 
-- kind: ImageStream
-  apiVersion: v1
-  metadata:
-    name: "b-bdso-cognito-is"
-  spec:
-    dockerImageRepository: "aceinfocoe"
-    importPolicy:
-      insecure: true
-    name: 1.0.0
-
-#Application B Deployment
 - kind: DeploymentConfig
   apiVersion: v1
   metadata:
-    name: "b-bdso-cognito-opr-dc"
+    name: "bdso-cognito-tst-dc"
   spec:
     replicas: 1
     selector:
-      name: "b-bdso-cognito-opr-dc"
+      name: "bdso-cognito-tst-dc"
     strategy:
       type: Rolling
     template:
       metadata:
         labels:
-          name: "b-bdso-cognito-opr-dc"
+          name: "bdso-cognito-tst-dc"
       spec:
         containers:
-        - name: "b-bdso-cognito"
-          image: "b-bdso-cognito-is"
+        - name: bdso-cognito
+          image: "bdso-cognito-is"
           env:
           - name: AWS_ACCESS_KEY_ID
             valueFrom:
@@ -206,6 +77,11 @@ objects:
               configMapKeyRef:
                 name: bdso-cognito-config-map 
                 key: AWS_DEFAULT_REGION 
+          - name: AWS_REGION
+            valueFrom:
+              configMapKeyRef:
+                name: bdso-cognito-config-map 
+                key: AWS_REGION 
           - name: AWS_SECRET_ACCESS_KEY
             valueFrom:
               configMapKeyRef:
@@ -233,26 +109,26 @@ objects:
             httpGet:
               path: /healthcheck
               port: 9000
-            initialDelaySeconds: 30
-            timeoutSeconds: 30
-            periodSeconds: 10
+            initialDelaySeconds: 90
+            timeoutSeconds: 180
+            periodSeconds: 90
             successThreshold: 1
             failureThreshold: 10
           readinessProbe:
             httpGet:
               path: /healthcheck
               port: 9000
-            initialDelaySeconds: 30
-            timeoutSeconds: 30
-            periodSeconds: 10
+            initialDelaySeconds: 90
+            timeoutSeconds: 180
+            periodSeconds: 90
             successThreshold: 1
             failureThreshold: 10
           resources:
             requests:
-              memory: 1024Mi
+              memory: 512Mi
               cpu: 500m
             limits:
-              memory: 2048Mi
+              memory: 512Mi
               cpu: 500m
     triggers:
     - type: ConfigChange
@@ -260,44 +136,7 @@ objects:
       imageChangeParams:
         automatic: true
         containerNames:
-        - "b-bdso-cognito"
+        - "bdso-cognito"
         from:
           kind: ImageStream
-          name: "b-bdso-cognito-is:1.0.0"
-
-#Application Service    
-- kind: Service
-  apiVersion: v1
-  metadata:
-    name: "b-bdso-cognito-opr-svc"
-  spec:
-    ports:
-    - name: bdso-cognito
-      port: 9000
-      targetPort: 9000
-    selector:
-      name: "b-bdso-cognito-opr-dc"
-#Route
-- kind: Route
-  apiVersion: v1
-  metadata:
-    name: "b-bdso-cognito"
-  spec:
-    tls:
-      termination: edge
-      insecureEdgeTerminationPolicy: Redirect 
-    to:
-      kind: Service
-      name: "b-bdso-cognito-opr-svc"
-
-- kind: HorizontalPodAutoscaler
-  apiVersion: autoscaling/v1
-  metadata:
-    name: b-bdso-cognito-opr-hpa
-  spec:
-    scaleTargetRef:
-      kind: DeploymentConfig
-      name: b-bdso-cognito-opr-dc
-    minReplicas: 1
-    maxReplicas: 5
-    targetCPUUtilizationPercentage: 70
+          name: "bdso-cognito-is:1.0.0"
