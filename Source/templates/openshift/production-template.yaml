@@ -25,11 +25,11 @@ objects:
     to:
       kind: Service
       name: "a-bdso-cognito-opr-svc"
-      weight: "100"
+      weight: 100
     alternateBackends:
     - kind: Service
       name: "b-bdso-cognito-opr-svc"
-      weight: "0"
+      weight: 0
 
 #Application A Deployment
 - kind: DeploymentConfig
