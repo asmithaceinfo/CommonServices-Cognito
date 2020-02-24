@@ -349,7 +349,7 @@ node('master') {
 	        		blueWeight = userInput['EXISTING_DEPLOYMENT_WEIGHT']
 	        		greenWeight = userInput['NEW_DEPLOYMENT_WEIGHT']
 	        		withCredentials([
-	          			[$class: 'UsernamePasswordMultiBinding', credentialsId: osCredentialId, usernameVariable: 'OS_USERNAME', passwordVariable: 'OS_PASSWORD']
+	          			string(credentialsId: openShiftCredential, variable: 'OSTOKEN')
 	        		]) {
 	          			sh """
            					${oc} tag --source=docker ${nexusRegistryURL}/${nexusRepoUser}/${projectTagName}:${dockerImageVersion} ${prodProjectName}/${green}-${projectTagName}-is:${dockerImageVersion} --insecure
