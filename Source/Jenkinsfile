@@ -225,7 +225,7 @@ node('master') {
                 } 
             } 
 			
-			 stage ('API LifeCycle Mgmt (APIGEE)(Test)') {
+/* 			 stage ('API LifeCycle Mgmt (APIGEE)(Test)') {
             	def httpStatus = 1;
             	withCredentials([
             		[$class: 'StringBinding', credentialsId: apigeeAuthCredentials, variable: 'APIGEECREDS']]) {        		
@@ -257,7 +257,7 @@ node('master') {
 	                    perfReport 'build/reports/jmeter/jmeterapitest.xml'
 	                }
 	            }
-            }                              
+            }                               */
 
          	 stage ('Zero Downtime Deployment (ZDD)') {
                 withCredentials([
@@ -406,7 +406,7 @@ node('master') {
 				}
       		}
       		
-             stage ('API LifeCycle Mgmt (APIGEE)') {
+            /*  stage ('API LifeCycle Mgmt (APIGEE)') {
             	def httpStatus = 1;
             	withCredentials([
                     [$class: 'UsernamePasswordMultiBinding', credentialsId: nexusCredentialId, usernameVariable: 'NEXUS_USERNAME', passwordVariable: 'NEXUS_PASSWORD'],
@@ -443,7 +443,7 @@ node('master') {
 	                    perfReport 'build/reports/jmeter/jmeterapitest.xml'
 	                }
 	            }
-            }                                
+            } */                                
 
         }
         notifySuccessful()
