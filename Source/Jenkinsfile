@@ -257,7 +257,7 @@ node('master') {
 	                    perfReport 'build/reports/jmeter/jmeterapitest.xml'
 	                }
 	            }
-            }   */                            
+            }                              
 
          	 stage ('Zero Downtime Deployment (ZDD)') {
                 withCredentials([
