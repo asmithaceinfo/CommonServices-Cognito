@@ -225,7 +225,7 @@ node('master') {
                 } 
             } 
 			
-			/* stage ('API LifeCycle Mgmt (APIGEE)(Test)') {
+			 stage ('API LifeCycle Mgmt (APIGEE)(Test)') {
             	def httpStatus = 1;
             	withCredentials([
             		[$class: 'StringBinding', credentialsId: apigeeAuthCredentials, variable: 'APIGEECREDS']]) {        		
@@ -246,9 +246,9 @@ node('master') {
         				"""
 					}
             	}
-			} */
+			} 
 
-            /* stage('Performance Testing (jMeter)') {
+             stage('Performance Testing (jMeter)') {
 	            withCredentials([
 	            	[$class: 'StringBinding', credentialsId: apigeeAPIKeyCredentials, variable: 'APIGEEAPIKEY']]) {
 	                dir("${env.WORKSPACE}${filepath}") {
@@ -259,7 +259,7 @@ node('master') {
 	            }
             }   */                            
 
-         	/* stage ('Zero Downtime Deployment (ZDD)') {
+         	 stage ('Zero Downtime Deployment (ZDD)') {
                 withCredentials([
                      [$class: 'UsernamePasswordMultiBinding', credentialsId: nexusCredentialId, usernameVariable: 'NEXUS_USERNAME', passwordVariable: 'NEXUS_PASSWORD'],
                     string(credentialsId: openShiftCredential, variable: 'OSTOKEN'),
@@ -443,7 +443,7 @@ node('master') {
 	                    perfReport 'build/reports/jmeter/jmeterapitest.xml'
 	                }
 	            }
-            } */                               
+            }                                
 
         }
         notifySuccessful()
