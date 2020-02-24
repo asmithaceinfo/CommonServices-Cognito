@@ -13,11 +13,11 @@ metadata:
 message: BDSO Cognito API Production Deployment Template
 
 objects:
-#Application Route
-- apiVersion: v1
-  kind: Route
+#APPLICATION
+- kind: Route
+  apiVersion: v1
   metadata:
-    name: "bdso-cognito"
+    name: bdso-cognito
   spec:
     tls:
       termination: edge
@@ -48,7 +48,7 @@ objects:
           name: "a-bdso-cognito-opr-dc"
       spec:
         containers:
-        - name: "a-bdso-cognito"
+        - name: a-bdso-cognito
           image: "a-bdso-cognito-is"
           env:
           - name: AWS_ACCESS_KEY_ID
@@ -198,7 +198,7 @@ objects:
           name: "b-bdso-cognito-opr-dc"
       spec:
         containers:
-        - name: "b-bdso-cognito"
+        - name: b-bdso-cognito
           image: "b-bdso-cognito-is"
           env:
           - name: AWS_ACCESS_KEY_ID
