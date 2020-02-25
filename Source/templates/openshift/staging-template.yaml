@@ -125,11 +125,11 @@ objects:
             failureThreshold: 10
           resources:
             requests:
-              memory: 1024Mi
-              cpu: 1000m
+              memory: 256Mi
+              cpu: 200m
             limits:
-              memory: 2048Mi
-              cpu: 1000m
+              memory: 512Mi
+              cpu: 500m
     triggers:
     - type: ConfigChange
     - type: ImageChange

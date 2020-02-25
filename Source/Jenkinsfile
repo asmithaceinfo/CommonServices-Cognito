@@ -226,7 +226,7 @@ node('master') {
             } 
 			
 			stage ('Trigger CD Pipeline') {
-				//build job: "Cognito-CD", wait: false
+				//build job: "CognitoCD", wait: false
         	}
         }
         notifySuccessful()
