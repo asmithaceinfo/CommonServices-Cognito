@@ -107,7 +107,7 @@ node('master') {
 					string(credentialsId: openShiftCredential, variable: 'OSTOKEN'),
 				]) { 
 	                sh """
-	                	${oc} login ${osHost} --username=${env.OS_USERNAME} --password=${env.OS_PASSWORD} --insecure-skip-tls-verify
+	                	${oc} login --server=${openShiftHost} --token=${OSTOKEN}
 	                	${oc} project ${stageProjectName}
 		                ${oc} process -f ${stageTemplateName} | ${oc} apply -f - -n ${stageProjectName}
                         ${oc} tag --source=docker ${nexusRegistryURL}/${nexusRepoUser}/${projectTagName}:${dockerImageVersion} ${stageProjectName}/${projectTagName}-is:${dockerImageVersion} --insecure
