@@ -13,9 +13,9 @@ metadata:
 message: BDSO Cognito API Production Deployment Template
 
 objects:
-#Application Route
+#APPLICATION
 - apiVersion: v1
-  kind: Route
+  kind: Route 
   metadata:
     name: "bdso-cognito"
   spec:
@@ -25,11 +25,11 @@ objects:
     to:
       kind: Service
       name: "a-bdso-cognito-opr-svc"
-      weight: "50"
+      weight: 100
     alternateBackends:
     - kind: Service
       name: "b-bdso-cognito-opr-svc"
-      weight: "50"
+      weight: 0
 
 #Application A Deployment
 - kind: DeploymentConfig
@@ -93,26 +93,26 @@ objects:
             httpGet:
               path: /healthcheck
               port: 9000
-            initialDelaySeconds: 30
-            timeoutSeconds: 30
-            periodSeconds: 10
+            initialDelaySeconds: 90
+            timeoutSeconds: 180
+            periodSeconds: 90
             successThreshold: 1
             failureThreshold: 10
           readinessProbe:
             httpGet:
               path: /healthcheck
               port: 9000
-            initialDelaySeconds: 30
-            timeoutSeconds: 30
-            periodSeconds: 10
+            initialDelaySeconds: 90
+            timeoutSeconds: 180
+            periodSeconds: 90
             successThreshold: 1
             failureThreshold: 10
           resources:
             requests:
-              memory: 1024Mi
-              cpu: 500m
+              memory: 256Mi
+              cpu: 200m
             limits:
-              memory: 2048Mi
+              memory: 512Mi
               cpu: 500m
     triggers:
     - type: ConfigChange
@@ -198,7 +198,7 @@ objects:
           name: "b-bdso-cognito-opr-dc"
       spec:
         containers:
-        - name: "b-bdso-cognito"
+        - name: b-bdso-cognito
           image: "b-bdso-cognito-is"
           env:
           - name: AWS_ACCESS_KEY_ID
@@ -243,26 +243,26 @@ objects:
             httpGet:
               path: /healthcheck
               port: 9000
-            initialDelaySeconds: 30
-            timeoutSeconds: 30
-            periodSeconds: 10
+            initialDelaySeconds: 90
+            timeoutSeconds: 180
+            periodSeconds: 90
             successThreshold: 1
             failureThreshold: 10
           readinessProbe:
             httpGet:
               path: /healthcheck
               port: 9000
-            initialDelaySeconds: 30
-            timeoutSeconds: 30
-            periodSeconds: 10
+            initialDelaySeconds: 90
+            timeoutSeconds: 180
+            periodSeconds: 90
             successThreshold: 1
             failureThreshold: 10
           resources:
             requests:
-              memory: 1024Mi
-              cpu: 500m
+              memory: 256Mi
+              cpu: 200m
             limits:
-              memory: 2048Mi
+              memory: 512Mi
               cpu: 500m
     triggers:
     - type: ConfigChange

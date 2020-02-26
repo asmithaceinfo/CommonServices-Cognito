@@ -35,15 +35,15 @@ node('master') {
             def testProjectDisplayName = "bdso-test"
             def testTemplateName = "${artifactFilePath}templates/openshift/testing-template.yaml"
 
-	    def stageProjectName = "bdso-stag"
-	    def stageConfigMapKeyValues = "bdsoCognitoConfigMap"
-	    def stageProjectDisplayName = "bdso-stag"
-	    def stageTemplateName = "${artifactFilePath}templates/openshift/staging-template.yaml"
+			def stageProjectName = "bdso-stag"
+			def stageConfigMapKeyValues = "bdsoCognitoConfigMap"
+			def stageProjectDisplayName = "bdso-stag"
+			def stageTemplateName = "${artifactFilePath}templates/openshift/staging-template.yaml"
 
-	    def prodProjectName = "bdso-prod"
-	    def prodConfigMapKeyValues = "bdsoCognitoConfigMap"
-	    def prodProjectDisplayName = "bdso-prod"
-	    def prodTemplateName = "${artifactFilePath}templates/openshift/production-template.yaml"
+			def prodProjectName = "bdso-prod"
+			def prodConfigMapKeyValues = "bdsoCognitoConfigMap"
+			def prodProjectDisplayName = "bdso-prod"
+			def prodTemplateName = "${artifactFilePath}templates/openshift/production-template.yaml"
 
 
             def route = '/healthcheck'
@@ -153,7 +153,7 @@ node('master') {
                 ]) {
                     dir("${env.WORKSPACE}${filepath}") {
                         sh """ echo "${nexusRegistryURL}/${env.NEXUS_USERNAME}/${projectTagName}:${dockerImageVersion} ./src/main/docker/Dockerfile" > imageFileList """
-                        anchore bailOnFail: true, bailOnPluginFail: true, engineCredentialsId: 'AnchoreEngineCredentials', engineurl: """${anchoreEngineURL}""", name: 'imageFileList'            
+                        anchore bailOnFail: false, bailOnPluginFail: false, engineCredentialsId: 'AnchoreEngineCredentials', engineurl: """${anchoreEngineURL}""", name: 'imageFileList'            
                     }
                 }
             }
@@ -224,7 +224,10 @@ node('master') {
                   sh exit ${retstat}
                 } 
             } 
-
+			
+			stage ('Trigger CD Pipeline') {
+				//build job: "CognitoCD", wait: false
+        	}
         }
         notifySuccessful()
     } catch (e) {

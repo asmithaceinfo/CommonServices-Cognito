@@ -91,25 +91,19 @@ compile - Dependencies for source set 'main' (deprecated, use 'implementation' i
 |         +--- org.springframework.security:spring-security-core:5.1.7.RELEASE (*)
 |         +--- org.springframework.security:spring-security-oauth2-core:5.1.7.RELEASE (*)
 |         \--- org.springframework:spring-core:5.1.11.RELEASE -> 5.1.13.RELEASE (*)
-+--- org.springframework.boot:spring-boot-starter-data-rest:2.1.12.RELEASE
-|    +--- org.springframework.boot:spring-boot-starter-web:2.1.12.RELEASE
++--- org.springframework.boot:spring-boot-starter-data-rest:2.1.4.RELEASE
+|    +--- org.springframework.boot:spring-boot-starter-web:2.1.4.RELEASE -> 2.1.12.RELEASE
 |    |    +--- org.springframework.boot:spring-boot-starter:2.1.12.RELEASE (*)
 |    |    +--- org.springframework.boot:spring-boot-starter-json:2.1.12.RELEASE
 |    |    |    +--- org.springframework.boot:spring-boot-starter:2.1.12.RELEASE (*)
 |    |    |    +--- org.springframework:spring-web:5.1.13.RELEASE (*)
-|    |    |    +--- com.fasterxml.jackson.core:jackson-databind:2.9.10.2
-|    |    |    |    +--- com.fasterxml.jackson.core:jackson-annotations:2.9.10
-|    |    |    |    \--- com.fasterxml.jackson.core:jackson-core:2.9.10
 |    |    |    +--- com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.9.10
-|    |    |    |    +--- com.fasterxml.jackson.core:jackson-core:2.9.10
-|    |    |    |    \--- com.fasterxml.jackson.core:jackson-databind:2.9.10 -> 2.9.10.2 (*)
+|    |    |    |    \--- com.fasterxml.jackson.core:jackson-core:2.9.10
 |    |    |    +--- com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.9.10
 |    |    |    |    +--- com.fasterxml.jackson.core:jackson-annotations:2.9.10
-|    |    |    |    +--- com.fasterxml.jackson.core:jackson-core:2.9.10
-|    |    |    |    \--- com.fasterxml.jackson.core:jackson-databind:2.9.10 -> 2.9.10.2 (*)
+|    |    |    |    \--- com.fasterxml.jackson.core:jackson-core:2.9.10
 |    |    |    \--- com.fasterxml.jackson.module:jackson-module-parameter-names:2.9.10
-|    |    |         +--- com.fasterxml.jackson.core:jackson-core:2.9.10
-|    |    |         \--- com.fasterxml.jackson.core:jackson-databind:2.9.10 -> 2.9.10.2 (*)
+|    |    |         \--- com.fasterxml.jackson.core:jackson-core:2.9.10
 |    |    +--- org.springframework.boot:spring-boot-starter-tomcat:2.1.12.RELEASE
 |    |    |    +--- javax.annotation:javax.annotation-api:1.3.2
 |    |    |    +--- org.apache.tomcat.embed:tomcat-embed-core:9.0.30
@@ -128,7 +122,7 @@ compile - Dependencies for source set 'main' (deprecated, use 'implementation' i
 |    |         +--- org.springframework:spring-core:5.1.13.RELEASE (*)
 |    |         +--- org.springframework:spring-expression:5.1.13.RELEASE (*)
 |    |         \--- org.springframework:spring-web:5.1.13.RELEASE (*)
-|    \--- org.springframework.data:spring-data-rest-webmvc:3.1.15.RELEASE
+|    \--- org.springframework.data:spring-data-rest-webmvc:3.1.6.RELEASE -> 3.1.15.RELEASE
 |         +--- org.springframework.data:spring-data-rest-core:3.1.15.RELEASE
 |         |    +--- org.springframework:spring-tx:5.1.13.RELEASE
 |         |    |    +--- org.springframework:spring-beans:5.1.13.RELEASE (*)
@@ -155,7 +149,6 @@ compile - Dependencies for source set 'main' (deprecated, use 'implementation' i
 |         |    +--- com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.9.10 (*)
 |         |    \--- org.slf4j:slf4j-api:1.7.26 -> 1.7.30
 |         +--- org.springframework:spring-webmvc:5.1.13.RELEASE (*)
-|         +--- com.fasterxml.jackson.core:jackson-databind:2.9.10.2 (*)
 |         +--- com.fasterxml.jackson.core:jackson-annotations:2.9.10
 |         \--- org.slf4j:slf4j-api:1.7.26 -> 1.7.30
 +--- com.amazonaws:aws-java-sdk-cognitoidp:1.11.653
@@ -166,7 +159,9 @@ compile - Dependencies for source set 'main' (deprecated, use 'implementation' i
 |    |    |    +--- commons-logging:commons-logging:1.2
 |    |    |    \--- commons-codec:commons-codec:1.11
 |    |    +--- software.amazon.ion:ion-java:1.0.2
-|    |    +--- com.fasterxml.jackson.core:jackson-databind:2.6.7.2 -> 2.9.10.2 (*)
+|    |    +--- com.fasterxml.jackson.core:jackson-databind:2.6.7.2 -> 2.9.10.2
+|    |    |    +--- com.fasterxml.jackson.core:jackson-annotations:2.9.10
+|    |    |    \--- com.fasterxml.jackson.core:jackson-core:2.9.10
 |    |    +--- com.fasterxml.jackson.dataformat:jackson-dataformat-cbor:2.6.7 -> 2.9.10
 |    |    |    \--- com.fasterxml.jackson.core:jackson-core:2.9.10
 |    |    \--- joda-time:joda-time:2.8.1 -> 2.10.5
@@ -318,25 +313,19 @@ compileClasspath - Compile classpath for source set 'main'.
 |         +--- org.springframework.security:spring-security-core:5.1.7.RELEASE (*)
 |         +--- org.springframework.security:spring-security-oauth2-core:5.1.7.RELEASE (*)
 |         \--- org.springframework:spring-core:5.1.11.RELEASE -> 5.1.13.RELEASE (*)
-+--- org.springframework.boot:spring-boot-starter-data-rest:2.1.12.RELEASE
-|    +--- org.springframework.boot:spring-boot-starter-web:2.1.12.RELEASE
++--- org.springframework.boot:spring-boot-starter-data-rest:2.1.4.RELEASE
+|    +--- org.springframework.boot:spring-boot-starter-web:2.1.4.RELEASE -> 2.1.12.RELEASE
 |    |    +--- org.springframework.boot:spring-boot-starter:2.1.12.RELEASE (*)
 |    |    +--- org.springframework.boot:spring-boot-starter-json:2.1.12.RELEASE
 |    |    |    +--- org.springframework.boot:spring-boot-starter:2.1.12.RELEASE (*)
 |    |    |    +--- org.springframework:spring-web:5.1.13.RELEASE (*)
-|    |    |    +--- com.fasterxml.jackson.core:jackson-databind:2.9.10.2
-|    |    |    |    +--- com.fasterxml.jackson.core:jackson-annotations:2.9.10
-|    |    |    |    \--- com.fasterxml.jackson.core:jackson-core:2.9.10
 |    |    |    +--- com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.9.10
-|    |    |    |    +--- com.fasterxml.jackson.core:jackson-core:2.9.10
-|    |    |    |    \--- com.fasterxml.jackson.core:jackson-databind:2.9.10 -> 2.9.10.2 (*)
+|    |    |    |    \--- com.fasterxml.jackson.core:jackson-core:2.9.10
 |    |    |    +--- com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.9.10
 |    |    |    |    +--- com.fasterxml.jackson.core:jackson-annotations:2.9.10
-|    |    |    |    +--- com.fasterxml.jackson.core:jackson-core:2.9.10
-|    |    |    |    \--- com.fasterxml.jackson.core:jackson-databind:2.9.10 -> 2.9.10.2 (*)
+|    |    |    |    \--- com.fasterxml.jackson.core:jackson-core:2.9.10
 |    |    |    \--- com.fasterxml.jackson.module:jackson-module-parameter-names:2.9.10
-|    |    |         +--- com.fasterxml.jackson.core:jackson-core:2.9.10
-|    |    |         \--- com.fasterxml.jackson.core:jackson-databind:2.9.10 -> 2.9.10.2 (*)
+|    |    |         \--- com.fasterxml.jackson.core:jackson-core:2.9.10
 |    |    +--- org.springframework.boot:spring-boot-starter-tomcat:2.1.12.RELEASE
 |    |    |    +--- javax.annotation:javax.annotation-api:1.3.2
 |    |    |    +--- org.apache.tomcat.embed:tomcat-embed-core:9.0.30
@@ -355,7 +344,7 @@ compileClasspath - Compile classpath for source set 'main'.
 |    |         +--- org.springframework:spring-core:5.1.13.RELEASE (*)
 |    |         +--- org.springframework:spring-expression:5.1.13.RELEASE (*)
 |    |         \--- org.springframework:spring-web:5.1.13.RELEASE (*)
-|    \--- org.springframework.data:spring-data-rest-webmvc:3.1.15.RELEASE
+|    \--- org.springframework.data:spring-data-rest-webmvc:3.1.6.RELEASE -> 3.1.15.RELEASE
 |         +--- org.springframework.data:spring-data-rest-core:3.1.15.RELEASE
 |         |    +--- org.springframework:spring-tx:5.1.13.RELEASE
 |         |    |    +--- org.springframework:spring-beans:5.1.13.RELEASE (*)
@@ -382,7 +371,6 @@ compileClasspath - Compile classpath for source set 'main'.
 |         |    +--- com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.9.10 (*)
 |         |    \--- org.slf4j:slf4j-api:1.7.26 -> 1.7.30
 |         +--- org.springframework:spring-webmvc:5.1.13.RELEASE (*)
-|         +--- com.fasterxml.jackson.core:jackson-databind:2.9.10.2 (*)
 |         +--- com.fasterxml.jackson.core:jackson-annotations:2.9.10
 |         \--- org.slf4j:slf4j-api:1.7.26 -> 1.7.30
 +--- com.amazonaws:aws-java-sdk-cognitoidp:1.11.653
@@ -393,7 +381,9 @@ compileClasspath - Compile classpath for source set 'main'.
 |    |    |    +--- commons-logging:commons-logging:1.2
 |    |    |    \--- commons-codec:commons-codec:1.11
 |    |    +--- software.amazon.ion:ion-java:1.0.2
-|    |    +--- com.fasterxml.jackson.core:jackson-databind:2.6.7.2 -> 2.9.10.2 (*)
+|    |    +--- com.fasterxml.jackson.core:jackson-databind:2.6.7.2 -> 2.9.10.2
+|    |    |    +--- com.fasterxml.jackson.core:jackson-annotations:2.9.10
+|    |    |    \--- com.fasterxml.jackson.core:jackson-core:2.9.10
 |    |    +--- com.fasterxml.jackson.dataformat:jackson-dataformat-cbor:2.6.7 -> 2.9.10
 |    |    |    \--- com.fasterxml.jackson.core:jackson-core:2.9.10
 |    |    \--- joda-time:joda-time:2.8.1 -> 2.10.5
@@ -548,25 +538,19 @@ default - Configuration for default artifacts.
 |         +--- org.springframework.security:spring-security-core:5.1.7.RELEASE (*)
 |         +--- org.springframework.security:spring-security-oauth2-core:5.1.7.RELEASE (*)
 |         \--- org.springframework:spring-core:5.1.11.RELEASE -> 5.1.13.RELEASE (*)
-+--- org.springframework.boot:spring-boot-starter-data-rest:2.1.12.RELEASE
-|    +--- org.springframework.boot:spring-boot-starter-web:2.1.12.RELEASE
++--- org.springframework.boot:spring-boot-starter-data-rest:2.1.4.RELEASE
+|    +--- org.springframework.boot:spring-boot-starter-web:2.1.4.RELEASE -> 2.1.12.RELEASE
 |    |    +--- org.springframework.boot:spring-boot-starter:2.1.12.RELEASE (*)
 |    |    +--- org.springframework.boot:spring-boot-starter-json:2.1.12.RELEASE
 |    |    |    +--- org.springframework.boot:spring-boot-starter:2.1.12.RELEASE (*)
 |    |    |    +--- org.springframework:spring-web:5.1.13.RELEASE (*)
-|    |    |    +--- com.fasterxml.jackson.core:jackson-databind:2.9.10.2
-|    |    |    |    +--- com.fasterxml.jackson.core:jackson-annotations:2.9.10
-|    |    |    |    \--- com.fasterxml.jackson.core:jackson-core:2.9.10
 |    |    |    +--- com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.9.10
-|    |    |    |    +--- com.fasterxml.jackson.core:jackson-core:2.9.10
-|    |    |    |    \--- com.fasterxml.jackson.core:jackson-databind:2.9.10 -> 2.9.10.2 (*)
+|    |    |    |    \--- com.fasterxml.jackson.core:jackson-core:2.9.10
 |    |    |    +--- com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.9.10
 |    |    |    |    +--- com.fasterxml.jackson.core:jackson-annotations:2.9.10
-|    |    |    |    +--- com.fasterxml.jackson.core:jackson-core:2.9.10
-|    |    |    |    \--- com.fasterxml.jackson.core:jackson-databind:2.9.10 -> 2.9.10.2 (*)
+|    |    |    |    \--- com.fasterxml.jackson.core:jackson-core:2.9.10
 |    |    |    \--- com.fasterxml.jackson.module:jackson-module-parameter-names:2.9.10
-|    |    |         +--- com.fasterxml.jackson.core:jackson-core:2.9.10
-|    |    |         \--- com.fasterxml.jackson.core:jackson-databind:2.9.10 -> 2.9.10.2 (*)
+|    |    |         \--- com.fasterxml.jackson.core:jackson-core:2.9.10
 |    |    +--- org.springframework.boot:spring-boot-starter-tomcat:2.1.12.RELEASE
 |    |    |    +--- javax.annotation:javax.annotation-api:1.3.2
 |    |    |    +--- org.apache.tomcat.embed:tomcat-embed-core:9.0.30
@@ -585,7 +569,7 @@ default - Configuration for default artifacts.
 |    |         +--- org.springframework:spring-core:5.1.13.RELEASE (*)
 |    |         +--- org.springframework:spring-expression:5.1.13.RELEASE (*)
 |    |         \--- org.springframework:spring-web:5.1.13.RELEASE (*)
-|    \--- org.springframework.data:spring-data-rest-webmvc:3.1.15.RELEASE
+|    \--- org.springframework.data:spring-data-rest-webmvc:3.1.6.RELEASE -> 3.1.15.RELEASE
 |         +--- org.springframework.data:spring-data-rest-core:3.1.15.RELEASE
 |         |    +--- org.springframework:spring-tx:5.1.13.RELEASE
 |         |    |    +--- org.springframework:spring-beans:5.1.13.RELEASE (*)
@@ -612,7 +596,6 @@ default - Configuration for default artifacts.
 |         |    +--- com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.9.10 (*)
 |         |    \--- org.slf4j:slf4j-api:1.7.26 -> 1.7.30
 |         +--- org.springframework:spring-webmvc:5.1.13.RELEASE (*)
-|         +--- com.fasterxml.jackson.core:jackson-databind:2.9.10.2 (*)
 |         +--- com.fasterxml.jackson.core:jackson-annotations:2.9.10
 |         \--- org.slf4j:slf4j-api:1.7.26 -> 1.7.30
 +--- com.amazonaws:aws-java-sdk-cognitoidp:1.11.653
@@ -623,7 +606,9 @@ default - Configuration for default artifacts.
 |    |    |    +--- commons-logging:commons-logging:1.2
 |    |    |    \--- commons-codec:commons-codec:1.11
 |    |    +--- software.amazon.ion:ion-java:1.0.2
-|    |    +--- com.fasterxml.jackson.core:jackson-databind:2.6.7.2 -> 2.9.10.2 (*)
+|    |    +--- com.fasterxml.jackson.core:jackson-databind:2.6.7.2 -> 2.9.10.2
+|    |    |    +--- com.fasterxml.jackson.core:jackson-annotations:2.9.10
+|    |    |    \--- com.fasterxml.jackson.core:jackson-core:2.9.10
 |    |    +--- com.fasterxml.jackson.dataformat:jackson-dataformat-cbor:2.6.7 -> 2.9.10
 |    |    |    \--- com.fasterxml.jackson.core:jackson-core:2.9.10
 |    |    \--- joda-time:joda-time:2.8.1 -> 2.10.5
@@ -821,25 +806,19 @@ runtime - Runtime dependencies for source set 'main' (deprecated, use 'runtimeOn
 |         +--- org.springframework.security:spring-security-core:5.1.7.RELEASE (*)
 |         +--- org.springframework.security:spring-security-oauth2-core:5.1.7.RELEASE (*)
 |         \--- org.springframework:spring-core:5.1.11.RELEASE -> 5.1.13.RELEASE (*)
-+--- org.springframework.boot:spring-boot-starter-data-rest:2.1.12.RELEASE
-|    +--- org.springframework.boot:spring-boot-starter-web:2.1.12.RELEASE
++--- org.springframework.boot:spring-boot-starter-data-rest:2.1.4.RELEASE
+|    +--- org.springframework.boot:spring-boot-starter-web:2.1.4.RELEASE -> 2.1.12.RELEASE
 |    |    +--- org.springframework.boot:spring-boot-starter:2.1.12.RELEASE (*)
 |    |    +--- org.springframework.boot:spring-boot-starter-json:2.1.12.RELEASE
 |    |    |    +--- org.springframework.boot:spring-boot-starter:2.1.12.RELEASE (*)
 |    |    |    +--- org.springframework:spring-web:5.1.13.RELEASE (*)
-|    |    |    +--- com.fasterxml.jackson.core:jackson-databind:2.9.10.2
-|    |    |    |    +--- com.fasterxml.jackson.core:jackson-annotations:2.9.10
-|    |    |    |    \--- com.fasterxml.jackson.core:jackson-core:2.9.10
 |    |    |    +--- com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.9.10
-|    |    |    |    +--- com.fasterxml.jackson.core:jackson-core:2.9.10
-|    |    |    |    \--- com.fasterxml.jackson.core:jackson-databind:2.9.10 -> 2.9.10.2 (*)
+|    |    |    |    \--- com.fasterxml.jackson.core:jackson-core:2.9.10
 |    |    |    +--- com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.9.10
 |    |    |    |    +--- com.fasterxml.jackson.core:jackson-annotations:2.9.10
-|    |    |    |    +--- com.fasterxml.jackson.core:jackson-core:2.9.10
-|    |    |    |    \--- com.fasterxml.jackson.core:jackson-databind:2.9.10 -> 2.9.10.2 (*)
+|    |    |    |    \--- com.fasterxml.jackson.core:jackson-core:2.9.10
 |    |    |    \--- com.fasterxml.jackson.module:jackson-module-parameter-names:2.9.10
-|    |    |         +--- com.fasterxml.jackson.core:jackson-core:2.9.10
-|    |    |         \--- com.fasterxml.jackson.core:jackson-databind:2.9.10 -> 2.9.10.2 (*)
+|    |    |         \--- com.fasterxml.jackson.core:jackson-core:2.9.10
 |    |    +--- org.springframework.boot:spring-boot-starter-tomcat:2.1.12.RELEASE
 |    |    |    +--- javax.annotation:javax.annotation-api:1.3.2
 |    |    |    +--- org.apache.tomcat.embed:tomcat-embed-core:9.0.30
@@ -858,7 +837,7 @@ runtime - Runtime dependencies for source set 'main' (deprecated, use 'runtimeOn
 |    |         +--- org.springframework:spring-core:5.1.13.RELEASE (*)
 |    |         +--- org.springframework:spring-expression:5.1.13.RELEASE (*)
 |    |         \--- org.springframework:spring-web:5.1.13.RELEASE (*)
-|    \--- org.springframework.data:spring-data-rest-webmvc:3.1.15.RELEASE
+|    \--- org.springframework.data:spring-data-rest-webmvc:3.1.6.RELEASE -> 3.1.15.RELEASE
 |         +--- org.springframework.data:spring-data-rest-core:3.1.15.RELEASE
 |         |    +--- org.springframework:spring-tx:5.1.13.RELEASE
 |         |    |    +--- org.springframework:spring-beans:5.1.13.RELEASE (*)
@@ -885,7 +864,6 @@ runtime - Runtime dependencies for source set 'main' (deprecated, use 'runtimeOn
 |         |    +--- com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.9.10 (*)
 |         |    \--- org.slf4j:slf4j-api:1.7.26 -> 1.7.30
 |         +--- org.springframework:spring-webmvc:5.1.13.RELEASE (*)
-|         +--- com.fasterxml.jackson.core:jackson-databind:2.9.10.2 (*)
 |         +--- com.fasterxml.jackson.core:jackson-annotations:2.9.10
 |         \--- org.slf4j:slf4j-api:1.7.26 -> 1.7.30
 +--- com.amazonaws:aws-java-sdk-cognitoidp:1.11.653
@@ -896,7 +874,9 @@ runtime - Runtime dependencies for source set 'main' (deprecated, use 'runtimeOn
 |    |    |    +--- commons-logging:commons-logging:1.2
 |    |    |    \--- commons-codec:commons-codec:1.11
 |    |    +--- software.amazon.ion:ion-java:1.0.2
-|    |    +--- com.fasterxml.jackson.core:jackson-databind:2.6.7.2 -> 2.9.10.2 (*)
+|    |    +--- com.fasterxml.jackson.core:jackson-databind:2.6.7.2 -> 2.9.10.2
+|    |    |    +--- com.fasterxml.jackson.core:jackson-annotations:2.9.10
+|    |    |    \--- com.fasterxml.jackson.core:jackson-core:2.9.10
 |    |    +--- com.fasterxml.jackson.dataformat:jackson-dataformat-cbor:2.6.7 -> 2.9.10
 |    |    |    \--- com.fasterxml.jackson.core:jackson-core:2.9.10
 |    |    \--- joda-time:joda-time:2.8.1 -> 2.10.5
@@ -1054,25 +1034,19 @@ runtimeClasspath - Runtime classpath of source set 'main'.
 |         +--- org.springframework.security:spring-security-core:5.1.7.RELEASE (*)
 |         +--- org.springframework.security:spring-security-oauth2-core:5.1.7.RELEASE (*)
 |         \--- org.springframework:spring-core:5.1.11.RELEASE -> 5.1.13.RELEASE (*)
-+--- org.springframework.boot:spring-boot-starter-data-rest:2.1.12.RELEASE
-|    +--- org.springframework.boot:spring-boot-starter-web:2.1.12.RELEASE
++--- org.springframework.boot:spring-boot-starter-data-rest:2.1.4.RELEASE
+|    +--- org.springframework.boot:spring-boot-starter-web:2.1.4.RELEASE -> 2.1.12.RELEASE
 |    |    +--- org.springframework.boot:spring-boot-starter:2.1.12.RELEASE (*)
 |    |    +--- org.springframework.boot:spring-boot-starter-json:2.1.12.RELEASE
 |    |    |    +--- org.springframework.boot:spring-boot-starter:2.1.12.RELEASE (*)
 |    |    |    +--- org.springframework:spring-web:5.1.13.RELEASE (*)
-|    |    |    +--- com.fasterxml.jackson.core:jackson-databind:2.9.10.2
-|    |    |    |    +--- com.fasterxml.jackson.core:jackson-annotations:2.9.10
-|    |    |    |    \--- com.fasterxml.jackson.core:jackson-core:2.9.10
 |    |    |    +--- com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.9.10
-|    |    |    |    +--- com.fasterxml.jackson.core:jackson-core:2.9.10
-|    |    |    |    \--- com.fasterxml.jackson.core:jackson-databind:2.9.10 -> 2.9.10.2 (*)
+|    |    |    |    \--- com.fasterxml.jackson.core:jackson-core:2.9.10
 |    |    |    +--- com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.9.10
 |    |    |    |    +--- com.fasterxml.jackson.core:jackson-annotations:2.9.10
-|    |    |    |    +--- com.fasterxml.jackson.core:jackson-core:2.9.10
-|    |    |    |    \--- com.fasterxml.jackson.core:jackson-databind:2.9.10 -> 2.9.10.2 (*)
+|    |    |    |    \--- com.fasterxml.jackson.core:jackson-core:2.9.10
 |    |    |    \--- com.fasterxml.jackson.module:jackson-module-parameter-names:2.9.10
-|    |    |         +--- com.fasterxml.jackson.core:jackson-core:2.9.10
-|    |    |         \--- com.fasterxml.jackson.core:jackson-databind:2.9.10 -> 2.9.10.2 (*)
+|    |    |         \--- com.fasterxml.jackson.core:jackson-core:2.9.10
 |    |    +--- org.springframework.boot:spring-boot-starter-tomcat:2.1.12.RELEASE
 |    |    |    +--- javax.annotation:javax.annotation-api:1.3.2
 |    |    |    +--- org.apache.tomcat.embed:tomcat-embed-core:9.0.30
@@ -1091,7 +1065,7 @@ runtimeClasspath - Runtime classpath of source set 'main'.
 |    |         +--- org.springframework:spring-core:5.1.13.RELEASE (*)
 |    |         +--- org.springframework:spring-expression:5.1.13.RELEASE (*)
 |    |         \--- org.springframework:spring-web:5.1.13.RELEASE (*)
-|    \--- org.springframework.data:spring-data-rest-webmvc:3.1.15.RELEASE
+|    \--- org.springframework.data:spring-data-rest-webmvc:3.1.6.RELEASE -> 3.1.15.RELEASE
 |         +--- org.springframework.data:spring-data-rest-core:3.1.15.RELEASE
 |         |    +--- org.springframework:spring-tx:5.1.13.RELEASE
 |         |    |    +--- org.springframework:spring-beans:5.1.13.RELEASE (*)
@@ -1118,7 +1092,6 @@ runtimeClasspath - Runtime classpath of source set 'main'.
 |         |    +--- com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.9.10 (*)
 |         |    \--- org.slf4j:slf4j-api:1.7.26 -> 1.7.30
 |         +--- org.springframework:spring-webmvc:5.1.13.RELEASE (*)
-|         +--- com.fasterxml.jackson.core:jackson-databind:2.9.10.2 (*)
 |         +--- com.fasterxml.jackson.core:jackson-annotations:2.9.10
 |         \--- org.slf4j:slf4j-api:1.7.26 -> 1.7.30
 +--- com.amazonaws:aws-java-sdk-cognitoidp:1.11.653
@@ -1129,7 +1102,9 @@ runtimeClasspath - Runtime classpath of source set 'main'.
 |    |    |    +--- commons-logging:commons-logging:1.2
 |    |    |    \--- commons-codec:commons-codec:1.11
 |    |    +--- software.amazon.ion:ion-java:1.0.2
-|    |    +--- com.fasterxml.jackson.core:jackson-databind:2.6.7.2 -> 2.9.10.2 (*)
+|    |    +--- com.fasterxml.jackson.core:jackson-databind:2.6.7.2 -> 2.9.10.2
+|    |    |    +--- com.fasterxml.jackson.core:jackson-annotations:2.9.10
+|    |    |    \--- com.fasterxml.jackson.core:jackson-core:2.9.10
 |    |    +--- com.fasterxml.jackson.dataformat:jackson-dataformat-cbor:2.6.7 -> 2.9.10
 |    |    |    \--- com.fasterxml.jackson.core:jackson-core:2.9.10
 |    |    \--- joda-time:joda-time:2.8.1 -> 2.10.5
@@ -1296,25 +1271,19 @@ testCompile - Dependencies for source set 'test' (deprecated, use 'testImplement
 |         +--- org.springframework.security:spring-security-core:5.1.7.RELEASE (*)
 |         +--- org.springframework.security:spring-security-oauth2-core:5.1.7.RELEASE (*)
 |         \--- org.springframework:spring-core:5.1.11.RELEASE -> 5.1.13.RELEASE (*)
-+--- org.springframework.boot:spring-boot-starter-data-rest:2.1.12.RELEASE
-|    +--- org.springframework.boot:spring-boot-starter-web:2.1.12.RELEASE
++--- org.springframework.boot:spring-boot-starter-data-rest:2.1.4.RELEASE
+|    +--- org.springframework.boot:spring-boot-starter-web:2.1.4.RELEASE -> 2.1.12.RELEASE
 |    |    +--- org.springframework.boot:spring-boot-starter:2.1.12.RELEASE (*)
 |    |    +--- org.springframework.boot:spring-boot-starter-json:2.1.12.RELEASE
 |    |    |    +--- org.springframework.boot:spring-boot-starter:2.1.12.RELEASE (*)
 |    |    |    +--- org.springframework:spring-web:5.1.13.RELEASE (*)
-|    |    |    +--- com.fasterxml.jackson.core:jackson-databind:2.9.10.2
-|    |    |    |    +--- com.fasterxml.jackson.core:jackson-annotations:2.9.10
-|    |    |    |    \--- com.fasterxml.jackson.core:jackson-core:2.9.10
 |    |    |    +--- com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.9.10
-|    |    |    |    +--- com.fasterxml.jackson.core:jackson-core:2.9.10
-|    |    |    |    \--- com.fasterxml.jackson.core:jackson-databind:2.9.10 -> 2.9.10.2 (*)
+|    |    |    |    \--- com.fasterxml.jackson.core:jackson-core:2.9.10
 |    |    |    +--- com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.9.10
 |    |    |    |    +--- com.fasterxml.jackson.core:jackson-annotations:2.9.10
-|    |    |    |    +--- com.fasterxml.jackson.core:jackson-core:2.9.10
-|    |    |    |    \--- com.fasterxml.jackson.core:jackson-databind:2.9.10 -> 2.9.10.2 (*)
+|    |    |    |    \--- com.fasterxml.jackson.core:jackson-core:2.9.10
 |    |    |    \--- com.fasterxml.jackson.module:jackson-module-parameter-names:2.9.10
-|    |    |         +--- com.fasterxml.jackson.core:jackson-core:2.9.10
-|    |    |         \--- com.fasterxml.jackson.core:jackson-databind:2.9.10 -> 2.9.10.2 (*)
+|    |    |         \--- com.fasterxml.jackson.core:jackson-core:2.9.10
 |    |    +--- org.springframework.boot:spring-boot-starter-tomcat:2.1.12.RELEASE
 |    |    |    +--- javax.annotation:javax.annotation-api:1.3.2
 |    |    |    +--- org.apache.tomcat.embed:tomcat-embed-core:9.0.30
@@ -1333,7 +1302,7 @@ testCompile - Dependencies for source set 'test' (deprecated, use 'testImplement
 |    |         +--- org.springframework:spring-core:5.1.13.RELEASE (*)
 |    |         +--- org.springframework:spring-expression:5.1.13.RELEASE (*)
 |    |         \--- org.springframework:spring-web:5.1.13.RELEASE (*)
-|    \--- org.springframework.data:spring-data-rest-webmvc:3.1.15.RELEASE
+|    \--- org.springframework.data:spring-data-rest-webmvc:3.1.6.RELEASE -> 3.1.15.RELEASE
 |         +--- org.springframework.data:spring-data-rest-core:3.1.15.RELEASE
 |         |    +--- org.springframework:spring-tx:5.1.13.RELEASE
 |         |    |    +--- org.springframework:spring-beans:5.1.13.RELEASE (*)
@@ -1360,7 +1329,6 @@ testCompile - Dependencies for source set 'test' (deprecated, use 'testImplement
 |         |    +--- com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.9.10 (*)
 |         |    \--- org.slf4j:slf4j-api:1.7.26 -> 1.7.30
 |         +--- org.springframework:spring-webmvc:5.1.13.RELEASE (*)
-|         +--- com.fasterxml.jackson.core:jackson-databind:2.9.10.2 (*)
 |         +--- com.fasterxml.jackson.core:jackson-annotations:2.9.10
 |         \--- org.slf4j:slf4j-api:1.7.26 -> 1.7.30
 +--- com.amazonaws:aws-java-sdk-cognitoidp:1.11.653
@@ -1371,7 +1339,9 @@ testCompile - Dependencies for source set 'test' (deprecated, use 'testImplement
 |    |    |    +--- commons-logging:commons-logging:1.2
 |    |    |    \--- commons-codec:commons-codec:1.11
 |    |    +--- software.amazon.ion:ion-java:1.0.2
-|    |    +--- com.fasterxml.jackson.core:jackson-databind:2.6.7.2 -> 2.9.10.2 (*)
+|    |    +--- com.fasterxml.jackson.core:jackson-databind:2.6.7.2 -> 2.9.10.2
+|    |    |    +--- com.fasterxml.jackson.core:jackson-annotations:2.9.10
+|    |    |    \--- com.fasterxml.jackson.core:jackson-core:2.9.10
 |    |    +--- com.fasterxml.jackson.dataformat:jackson-dataformat-cbor:2.6.7 -> 2.9.10
 |    |    |    \--- com.fasterxml.jackson.core:jackson-core:2.9.10
 |    |    \--- joda-time:joda-time:2.8.1 -> 2.10.5
@@ -1559,25 +1529,19 @@ testCompileClasspath - Compile classpath for source set 'test'.
 |         +--- org.springframework.security:spring-security-core:5.1.7.RELEASE (*)
 |         +--- org.springframework.security:spring-security-oauth2-core:5.1.7.RELEASE (*)
 |         \--- org.springframework:spring-core:5.1.11.RELEASE -> 5.1.13.RELEASE (*)
-+--- org.springframework.boot:spring-boot-starter-data-rest:2.1.12.RELEASE
-|    +--- org.springframework.boot:spring-boot-starter-web:2.1.12.RELEASE
++--- org.springframework.boot:spring-boot-starter-data-rest:2.1.4.RELEASE
+|    +--- org.springframework.boot:spring-boot-starter-web:2.1.4.RELEASE -> 2.1.12.RELEASE
 |    |    +--- org.springframework.boot:spring-boot-starter:2.1.12.RELEASE (*)
 |    |    +--- org.springframework.boot:spring-boot-starter-json:2.1.12.RELEASE
 |    |    |    +--- org.springframework.boot:spring-boot-starter:2.1.12.RELEASE (*)
 |    |    |    +--- org.springframework:spring-web:5.1.13.RELEASE (*)
-|    |    |    +--- com.fasterxml.jackson.core:jackson-databind:2.9.10.2
-|    |    |    |    +--- com.fasterxml.jackson.core:jackson-annotations:2.9.10
-|    |    |    |    \--- com.fasterxml.jackson.core:jackson-core:2.9.10
 |    |    |    +--- com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.9.10
-|    |    |    |    +--- com.fasterxml.jackson.core:jackson-core:2.9.10
-|    |    |    |    \--- com.fasterxml.jackson.core:jackson-databind:2.9.10 -> 2.9.10.2 (*)
+|    |    |    |    \--- com.fasterxml.jackson.core:jackson-core:2.9.10
 |    |    |    +--- com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.9.10
 |    |    |    |    +--- com.fasterxml.jackson.core:jackson-annotations:2.9.10
-|    |    |    |    +--- com.fasterxml.jackson.core:jackson-core:2.9.10
-|    |    |    |    \--- com.fasterxml.jackson.core:jackson-databind:2.9.10 -> 2.9.10.2 (*)
+|    |    |    |    \--- com.fasterxml.jackson.core:jackson-core:2.9.10
 |    |    |    \--- com.fasterxml.jackson.module:jackson-module-parameter-names:2.9.10
-|    |    |         +--- com.fasterxml.jackson.core:jackson-core:2.9.10
-|    |    |         \--- com.fasterxml.jackson.core:jackson-databind:2.9.10 -> 2.9.10.2 (*)
+|    |    |         \--- com.fasterxml.jackson.core:jackson-core:2.9.10
 |    |    +--- org.springframework.boot:spring-boot-starter-tomcat:2.1.12.RELEASE
 |    |    |    +--- javax.annotation:javax.annotation-api:1.3.2
 |    |    |    +--- org.apache.tomcat.embed:tomcat-embed-core:9.0.30
@@ -1596,7 +1560,7 @@ testCompileClasspath - Compile classpath for source set 'test'.
 |    |         +--- org.springframework:spring-core:5.1.13.RELEASE (*)
 |    |         +--- org.springframework:spring-expression:5.1.13.RELEASE (*)
 |    |         \--- org.springframework:spring-web:5.1.13.RELEASE (*)
-|    \--- org.springframework.data:spring-data-rest-webmvc:3.1.15.RELEASE
+|    \--- org.springframework.data:spring-data-rest-webmvc:3.1.6.RELEASE -> 3.1.15.RELEASE
 |         +--- org.springframework.data:spring-data-rest-core:3.1.15.RELEASE
 |         |    +--- org.springframework:spring-tx:5.1.13.RELEASE
 |         |    |    +--- org.springframework:spring-beans:5.1.13.RELEASE (*)
@@ -1623,7 +1587,6 @@ testCompileClasspath - Compile classpath for source set 'test'.
 |         |    +--- com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.9.10 (*)
 |         |    \--- org.slf4j:slf4j-api:1.7.26 -> 1.7.30
 |         +--- org.springframework:spring-webmvc:5.1.13.RELEASE (*)
-|         +--- com.fasterxml.jackson.core:jackson-databind:2.9.10.2 (*)
 |         +--- com.fasterxml.jackson.core:jackson-annotations:2.9.10
 |         \--- org.slf4j:slf4j-api:1.7.26 -> 1.7.30
 +--- com.amazonaws:aws-java-sdk-cognitoidp:1.11.653
@@ -1634,7 +1597,9 @@ testCompileClasspath - Compile classpath for source set 'test'.
 |    |    |    +--- commons-logging:commons-logging:1.2
 |    |    |    \--- commons-codec:commons-codec:1.11
 |    |    +--- software.amazon.ion:ion-java:1.0.2
-|    |    +--- com.fasterxml.jackson.core:jackson-databind:2.6.7.2 -> 2.9.10.2 (*)
+|    |    +--- com.fasterxml.jackson.core:jackson-databind:2.6.7.2 -> 2.9.10.2
+|    |    |    +--- com.fasterxml.jackson.core:jackson-annotations:2.9.10
+|    |    |    \--- com.fasterxml.jackson.core:jackson-core:2.9.10
 |    |    +--- com.fasterxml.jackson.dataformat:jackson-dataformat-cbor:2.6.7 -> 2.9.10
 |    |    |    \--- com.fasterxml.jackson.core:jackson-core:2.9.10
 |    |    \--- joda-time:joda-time:2.8.1 -> 2.10.5
@@ -1827,25 +1792,19 @@ testRuntime - Runtime dependencies for source set 'test' (deprecated, use 'testR
 |         +--- org.springframework.security:spring-security-core:5.1.7.RELEASE (*)
 |         +--- org.springframework.security:spring-security-oauth2-core:5.1.7.RELEASE (*)
 |         \--- org.springframework:spring-core:5.1.11.RELEASE -> 5.1.13.RELEASE (*)
-+--- org.springframework.boot:spring-boot-starter-data-rest:2.1.12.RELEASE
-|    +--- org.springframework.boot:spring-boot-starter-web:2.1.12.RELEASE
++--- org.springframework.boot:spring-boot-starter-data-rest:2.1.4.RELEASE
+|    +--- org.springframework.boot:spring-boot-starter-web:2.1.4.RELEASE -> 2.1.12.RELEASE
 |    |    +--- org.springframework.boot:spring-boot-starter:2.1.12.RELEASE (*)
 |    |    +--- org.springframework.boot:spring-boot-starter-json:2.1.12.RELEASE
 |    |    |    +--- org.springframework.boot:spring-boot-starter:2.1.12.RELEASE (*)
 |    |    |    +--- org.springframework:spring-web:5.1.13.RELEASE (*)
-|    |    |    +--- com.fasterxml.jackson.core:jackson-databind:2.9.10.2
-|    |    |    |    +--- com.fasterxml.jackson.core:jackson-annotations:2.9.10
-|    |    |    |    \--- com.fasterxml.jackson.core:jackson-core:2.9.10
 |    |    |    +--- com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.9.10
-|    |    |    |    +--- com.fasterxml.jackson.core:jackson-core:2.9.10
-|    |    |    |    \--- com.fasterxml.jackson.core:jackson-databind:2.9.10 -> 2.9.10.2 (*)
+|    |    |    |    \--- com.fasterxml.jackson.core:jackson-core:2.9.10
 |    |    |    +--- com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.9.10
 |    |    |    |    +--- com.fasterxml.jackson.core:jackson-annotations:2.9.10
-|    |    |    |    +--- com.fasterxml.jackson.core:jackson-core:2.9.10
-|    |    |    |    \--- com.fasterxml.jackson.core:jackson-databind:2.9.10 -> 2.9.10.2 (*)
+|    |    |    |    \--- com.fasterxml.jackson.core:jackson-core:2.9.10
 |    |    |    \--- com.fasterxml.jackson.module:jackson-module-parameter-names:2.9.10
-|    |    |         +--- com.fasterxml.jackson.core:jackson-core:2.9.10
-|    |    |         \--- com.fasterxml.jackson.core:jackson-databind:2.9.10 -> 2.9.10.2 (*)
+|    |    |         \--- com.fasterxml.jackson.core:jackson-core:2.9.10
 |    |    +--- org.springframework.boot:spring-boot-starter-tomcat:2.1.12.RELEASE
 |    |    |    +--- javax.annotation:javax.annotation-api:1.3.2
 |    |    |    +--- org.apache.tomcat.embed:tomcat-embed-core:9.0.30
@@ -1864,7 +1823,7 @@ testRuntime - Runtime dependencies for source set 'test' (deprecated, use 'testR
 |    |         +--- org.springframework:spring-core:5.1.13.RELEASE (*)
 |    |         +--- org.springframework:spring-expression:5.1.13.RELEASE (*)
 |    |         \--- org.springframework:spring-web:5.1.13.RELEASE (*)
-|    \--- org.springframework.data:spring-data-rest-webmvc:3.1.15.RELEASE
+|    \--- org.springframework.data:spring-data-rest-webmvc:3.1.6.RELEASE -> 3.1.15.RELEASE
 |         +--- org.springframework.data:spring-data-rest-core:3.1.15.RELEASE
 |         |    +--- org.springframework:spring-tx:5.1.13.RELEASE
 |         |    |    +--- org.springframework:spring-beans:5.1.13.RELEASE (*)
@@ -1891,7 +1850,6 @@ testRuntime - Runtime dependencies for source set 'test' (deprecated, use 'testR
 |         |    +--- com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.9.10 (*)
 |         |    \--- org.slf4j:slf4j-api:1.7.26 -> 1.7.30
 |         +--- org.springframework:spring-webmvc:5.1.13.RELEASE (*)
-|         +--- com.fasterxml.jackson.core:jackson-databind:2.9.10.2 (*)
 |         +--- com.fasterxml.jackson.core:jackson-annotations:2.9.10
 |         \--- org.slf4j:slf4j-api:1.7.26 -> 1.7.30
 +--- com.amazonaws:aws-java-sdk-cognitoidp:1.11.653
@@ -1902,7 +1860,9 @@ testRuntime - Runtime dependencies for source set 'test' (deprecated, use 'testR
 |    |    |    +--- commons-logging:commons-logging:1.2
 |    |    |    \--- commons-codec:commons-codec:1.11
 |    |    +--- software.amazon.ion:ion-java:1.0.2
-|    |    +--- com.fasterxml.jackson.core:jackson-databind:2.6.7.2 -> 2.9.10.2 (*)
+|    |    +--- com.fasterxml.jackson.core:jackson-databind:2.6.7.2 -> 2.9.10.2
+|    |    |    +--- com.fasterxml.jackson.core:jackson-annotations:2.9.10
+|    |    |    \--- com.fasterxml.jackson.core:jackson-core:2.9.10
 |    |    +--- com.fasterxml.jackson.dataformat:jackson-dataformat-cbor:2.6.7 -> 2.9.10
 |    |    |    \--- com.fasterxml.jackson.core:jackson-core:2.9.10
 |    |    \--- joda-time:joda-time:2.8.1 -> 2.10.5
@@ -2096,25 +2056,19 @@ testRuntimeClasspath - Runtime classpath of source set 'test'.
 |         +--- org.springframework.security:spring-security-core:5.1.7.RELEASE (*)
 |         +--- org.springframework.security:spring-security-oauth2-core:5.1.7.RELEASE (*)
 |         \--- org.springframework:spring-core:5.1.11.RELEASE -> 5.1.13.RELEASE (*)
-+--- org.springframework.boot:spring-boot-starter-data-rest:2.1.12.RELEASE
-|    +--- org.springframework.boot:spring-boot-starter-web:2.1.12.RELEASE
++--- org.springframework.boot:spring-boot-starter-data-rest:2.1.4.RELEASE
+|    +--- org.springframework.boot:spring-boot-starter-web:2.1.4.RELEASE -> 2.1.12.RELEASE
 |    |    +--- org.springframework.boot:spring-boot-starter:2.1.12.RELEASE (*)
 |    |    +--- org.springframework.boot:spring-boot-starter-json:2.1.12.RELEASE
 |    |    |    +--- org.springframework.boot:spring-boot-starter:2.1.12.RELEASE (*)
 |    |    |    +--- org.springframework:spring-web:5.1.13.RELEASE (*)
-|    |    |    +--- com.fasterxml.jackson.core:jackson-databind:2.9.10.2
-|    |    |    |    +--- com.fasterxml.jackson.core:jackson-annotations:2.9.10
-|    |    |    |    \--- com.fasterxml.jackson.core:jackson-core:2.9.10
 |    |    |    +--- com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.9.10
-|    |    |    |    +--- com.fasterxml.jackson.core:jackson-core:2.9.10
-|    |    |    |    \--- com.fasterxml.jackson.core:jackson-databind:2.9.10 -> 2.9.10.2 (*)
+|    |    |    |    \--- com.fasterxml.jackson.core:jackson-core:2.9.10
 |    |    |    +--- com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.9.10
 |    |    |    |    +--- com.fasterxml.jackson.core:jackson-annotations:2.9.10
-|    |    |    |    +--- com.fasterxml.jackson.core:jackson-core:2.9.10
-|    |    |    |    \--- com.fasterxml.jackson.core:jackson-databind:2.9.10 -> 2.9.10.2 (*)
+|    |    |    |    \--- com.fasterxml.jackson.core:jackson-core:2.9.10
 |    |    |    \--- com.fasterxml.jackson.module:jackson-module-parameter-names:2.9.10
-|    |    |         +--- com.fasterxml.jackson.core:jackson-core:2.9.10
-|    |    |         \--- com.fasterxml.jackson.core:jackson-databind:2.9.10 -> 2.9.10.2 (*)
+|    |    |         \--- com.fasterxml.jackson.core:jackson-core:2.9.10
 |    |    +--- org.springframework.boot:spring-boot-starter-tomcat:2.1.12.RELEASE
 |    |    |    +--- javax.annotation:javax.annotation-api:1.3.2
 |    |    |    +--- org.apache.tomcat.embed:tomcat-embed-core:9.0.30
@@ -2133,7 +2087,7 @@ testRuntimeClasspath - Runtime classpath of source set 'test'.
 |    |         +--- org.springframework:spring-core:5.1.13.RELEASE (*)
 |    |         +--- org.springframework:spring-expression:5.1.13.RELEASE (*)
 |    |         \--- org.springframework:spring-web:5.1.13.RELEASE (*)
-|    \--- org.springframework.data:spring-data-rest-webmvc:3.1.15.RELEASE
+|    \--- org.springframework.data:spring-data-rest-webmvc:3.1.6.RELEASE -> 3.1.15.RELEASE
 |         +--- org.springframework.data:spring-data-rest-core:3.1.15.RELEASE
 |         |    +--- org.springframework:spring-tx:5.1.13.RELEASE
 |         |    |    +--- org.springframework:spring-beans:5.1.13.RELEASE (*)
@@ -2160,7 +2114,6 @@ testRuntimeClasspath - Runtime classpath of source set 'test'.
 |         |    +--- com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.9.10 (*)
 |         |    \--- org.slf4j:slf4j-api:1.7.26 -> 1.7.30
 |         +--- org.springframework:spring-webmvc:5.1.13.RELEASE (*)
-|         +--- com.fasterxml.jackson.core:jackson-databind:2.9.10.2 (*)
 |         +--- com.fasterxml.jackson.core:jackson-annotations:2.9.10
 |         \--- org.slf4j:slf4j-api:1.7.26 -> 1.7.30
 +--- com.amazonaws:aws-java-sdk-cognitoidp:1.11.653
@@ -2171,7 +2124,9 @@ testRuntimeClasspath - Runtime classpath of source set 'test'.
 |    |    |    +--- commons-logging:commons-logging:1.2
 |    |    |    \--- commons-codec:commons-codec:1.11
 |    |    +--- software.amazon.ion:ion-java:1.0.2
-|    |    +--- com.fasterxml.jackson.core:jackson-databind:2.6.7.2 -> 2.9.10.2 (*)
+|    |    +--- com.fasterxml.jackson.core:jackson-databind:2.6.7.2 -> 2.9.10.2
+|    |    |    +--- com.fasterxml.jackson.core:jackson-annotations:2.9.10
+|    |    |    \--- com.fasterxml.jackson.core:jackson-core:2.9.10
 |    |    +--- com.fasterxml.jackson.dataformat:jackson-dataformat-cbor:2.6.7 -> 2.9.10
 |    |    |    \--- com.fasterxml.jackson.core:jackson-core:2.9.10
 |    |    \--- joda-time:joda-time:2.8.1 -> 2.10.5
@@ -2302,5 +2257,5 @@ Deprecated Gradle features were used in this build, making it incompatible with 
 Use '--warning-mode all' to show the individual deprecation warnings.
 See https://docs.gradle.org/5.4.1/userguide/command_line_interface.html#sec:command_line_warnings
 
-BUILD SUCCESSFUL in 9s
+BUILD SUCCESSFUL in 5s
 1 actionable task: 1 executed
